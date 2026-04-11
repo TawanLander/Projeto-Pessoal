@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Caveat Brush", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: x-large;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+:root {
+    --cor-primaria: grey;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100dvh;
+    width: 100dvw;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 10%;
+    flex: 0 0 auto;
+    background-color: var(--cor-primaria);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+header .logo {
+    width: 15%;
+}
+
+header .container {
+    width: 100%;
+    gap: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0 20px;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+a:hover {
+    color: var()
+}
+
+.atual {
+    color: yellow;
+    fill: yellow;
+    font-weight: 800;
+}
+
+main {
+    width: 100%;
+    height: 92.5%;
+    flex: 1 0 auto;
+    background-image: linear-gradient(to bottom, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+main .container {
+    width: 65%;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 40px;
+}
+
+main a {
+    text-decoration: none;
+}
+
+main .login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+main .login input {
+    width: 80%;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+main .login label~input {
+    margin-bottom: 20px;
+}
+
+footer {
+    width: 100%;
+    height: 2.5%;
+    flex: 0 0 auto;
+}
