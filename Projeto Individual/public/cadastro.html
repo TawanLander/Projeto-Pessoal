@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="view-transition" content="same-origin">
+    <title>Document</title>
+    <link rel="stylesheet" href="./sources/style.css" />
+    <link rel="icon" href="" />
+    <script src="./sources/script.js" defer></script>
+</head>
+<body>
+    <header>
+      <div class="logo">Logo Temporária</div>
+
+      <div class="container">
+        <!--Parte do INÍCIO-->
+        <span><a href="./index.html">
+          <svg width="25px" height="25px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z" fill="#FFFFFF"/>
+            </svg>
+          </svg>Início</a></span>
+          <!--Parte de LOGIN-->
+        <span><a class='atual' href="#"><svg width="25px" height="25px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" fill="#FFFFFF"/>
+          <path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" fill="#FFFFFF"/></svg>Login</a></span>
+          <!--Parte SOBRE NÓS-->
+        <span><a href=""><svg width="25px" height="25px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.00001 0H7.00001L5.51292 4.57681L0.700554 4.57682L0.0825195 6.47893L3.97581 9.30756L2.48873 13.8843L4.10677 15.0599L8.00002 12.2313L11.8933 15.0599L13.5113 13.8843L12.0242 9.30754L15.9175 6.47892L15.2994 4.57681L10.4871 4.57681L9.00001 0Z" fill="#FFFFFF"/>
+          </svg>Sobre Nós</a></span>
+      </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="cadastro">
+                <h1>Cadastro</h1>
+                <label>Nome</label>
+                <input spellcheck="false" type="text" id="ipt-nome" placeholder="João Silva" required onclick="verificarNome()" oninput="verificarNome()" onblur="limparClass()">
+                <div id="erro-nome" class="erro sumir"></div>
+                <label>Email</label>
+                <input spellcheck="false" type="email" id="ipt-email" placeholder="email@email.com" required onclick="verificarEmail()" oninput="verificarEmail()" onblur="limparClass()">
+                <div id="erro-email" class="erro sumir">Email está incorreto! Verifique a digitação.</div>
+                <label>Gênero</label>
+                <select id="slc-genero" onchange="verificarGenero()">
+                    <option disabled hidden selected>Selecionar</option>
+                    <option>Masculino</option>
+                    <option>Feminino</option>
+                    <option>Prefiro Não Dizer</option>
+                    <option>Outro</option>
+                </select>
+                <div id="casoOutro" class="casoOutro sumir">
+                    <input spellcheck="false" type="text" id="ipt-outroGenero" placeholder="Gênero">
+                </div>
+                <label>Data de Nascimento</label>
+                <input spellcheck="false" type="date" id="ipt-idade" oninput="verificarData()" onclick="verificarData()" onblur="limparClass()">
+                <label>Senha</label>
+                <input spellcheck="false" type="password" id="ipt-senha" placeholder="******" required oninput="verificarSenha()" onclick="verificarSenha()" onblur="limparClass()">
+                <div id="erro-senha" class="erro sumir"></div>
+                <label>Confirme a Senha</label>
+                <input spellcheck="false" type="password" id="ipt-senhaConfirmar" placeholder="******" required oninput="verificarSenha(1)" onclick="verificarSenha(1)" onblur="limparClass()">
+                <div id="erro-senhaConfirmar" class="erro sumir">As senhas devem ser iguais</div>
+                <button type="submit" class="btn-importante" onclick="cadastrar()">Cadastrar</button>
+                <div class="mudar">
+                    <h4>Já tem cadastro? <a href="./login.html">Login</a></h4>
+                </div>
+                <div id="confirmacao" class="confirmacao sumir"><span>Cadastro Realizado com sucesso!</span> Redirecionando você ao Login!</div>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+</html>

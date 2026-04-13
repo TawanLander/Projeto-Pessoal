@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Caveat Brush", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: x-large;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+:root {
+    --cor-texto-quiz: rgb(255, 255, 255, .9);
+    --preto: black;
+    --destaque: rgb(76, 76, 255);
+    --cor-texto: #fff;
+    --box-shadow: rgba(0, 0, 0, .35);
+    --bgc: whitesmoke;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100dvh;
+    width: 100dvw;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 10%;
+    flex: 0 0 auto;
+    background-color: var(--preto);
+    color: var(--cor-texto);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+header .logo {
+    width: 15%;
+}
+
+header .container {
+    width: 100%;
+    gap: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0 20px;
+}
+
+header a {
+    color: var(--cor-texto);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+a {
+    transition: all .4s ease;
+}
+
+a:hover {
+    color: var(--destaque);
+    transform: scale(1.1);
+}
+
+.atual {
+    color: var(--destaque);
+    font-weight: 800;
+}
+
+main {
+    width: 100%;
+    height: 92.5%;
+    flex: 1 0 auto;
+    background: linear-gradient(to top, #2c3e50 0%, #3f5a7a 33%, #5b86b6 66%, #8fb6e1 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+main .container {
+    width: 40%;
+    border: 2px solid var(--preto);
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 15px 45px var(--box-shadow);
+    background-color: var(--bgc);
+}
+
+main a {
+    text-decoration: none;
+    color: rgb(0, 85, 85);
+}
+
+.login,
+.cadastro {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+input,
+select {
+    width: 70%;
+    text-align: center;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: all .5s ease;
+    text-decoration: none;
+    background-color: rgb(230, 230, 230);
+    outline: none;
+}
+
+.login label~input,
+.cadastro label~input,
+.cadastro label~select {
+    margin-bottom: 20px;
+}
+
+.invalido {
+    border: 2px solid darkred;
+    background-color: rgba(216, 169, 169, 0.5);
+}
+
+.valido {
+    border: 2px solid darkgreen;
+    background-color: rgba(175, 243, 196, 0.5);
+}
+
+.container h1 {
+    margin: 0 15px 20px 15px;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.btn-importante {
+    font-weight: 500;
+    letter-spacing: .5px;
+    padding: 5px 40px;
+    border: 2px solid var(--preto);
+    border-radius: 5px;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: transparent;
+    margin: 10px;
+    transition: all .6s ease-in-out;
+}
+
+.btn-importante:hover,
+.btn-importante:focus {
+    background-image: linear-gradient(to right, var(--destaque) 0%, rgb(126, 126, 252) 50%, rgb(160, 160, 252) 100%);
+    transform: scale(1.1);
+    color: white;
+}
+
+.mudar {
+    margin-top: 20px;
+}
+
+.erro {
+    background: rgba(245, 113, 113, 0.5);
+    border: 2px solid rgba(245, 113, 113, 0.5);
+    border-radius: 5px;
+    color: var(--preto);
+    font-size: medium;
+}
+
+.casoOutro {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.confirmacao {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #fff;
+    padding: 60px;
+    border: 2px solid var(--preto);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--box-shadow);
+    font-size: xx-large;
+}
+
+.confirmacao span {
+    font-size: xx-large;
+    color: darkgreen
+}
+
+footer {
+    width: 100%;
+    height: 2.5%;
+    flex: 0 0 auto;
+}
+
+.sumir {
+    display: none;
+}
+
+.animacao {
+    display: flex !important;
+    animation: fadeIn .6s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.quizes {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 92.5dvh;
+    align-content: flex-start;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5%;
+    margin: 0 4%;
+}
+
+.quiz {
+    width: 23.5%;
+    height: 25%;
+    border-radius: 15px;
+    border: 2px solid var(--preto);
+    padding: 15px;
+    align-items: start;
+    justify-content: start;
+    text-align: start;
+    box-shadow: 0 5px 15px var(--box-shadow);
+}
+
+.quiz h1 {
+    font-weight: 550;
+    font-size: xx-large;
+    color: var(--cor-texto-quiz)
+}
+
+.content {
+    font-weight: 550;
+    font-size: x-large;
+    color: var(--cor-texto-quiz)
+}
+
+.featured {
+    width: 47.5%;
+}
+
+.bg-img {
+    background-image: url(https://imgs.search.brave.com/Ot5Z2KERv-HQ8c-ib5zHx2hcogjDPxhsEO8qUDLLSP8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93MC5w/ZWFrcHguY29tL3dh/bGxwYXBlci8xODAv/OTYyL0hELXdhbGxw/YXBlci1hbmltZS1q/dWp1dHN1LWthaXNl/bi1zdWt1bmEtanVq/dXRzdS1rYWlzZW4t/dGh1bWJuYWlsLmpw/Zw);
+    color: white;
+    background-size: 100% 100%;
+    background-position: center center;
+}
