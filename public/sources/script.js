@@ -5,10 +5,19 @@ const genero = document.getElementById('slc-genero');
 const idade = document.getElementById('ipt-idade');
 const senhaConfirmar = document.getElementById('ipt-senhaConfirmar');
 const confirmacao = document.getElementById('confirmacao');
+const casoOutro = document.getElementById('casoOutro');
 
 const erroEmail = document.getElementById('erro-email');
 const erroSenha = document.getElementById('erro-senha');
+const erroIdade = document.getElementById('erro-idade');
 const erroSenhaConfirmar = document.getElementById('erro-senhaConfirmar');
+
+var generoAlternativo = false;
+const outroGenero = document.getElementById('ipt-outroGenero');
+
+function verificarNome(){
+    let nomeValor = nome.value;
+}
 
 function verificarEmail() {
     let emailValor = email.value;
@@ -62,25 +71,67 @@ function verificarSenha(tipo) {
             }
         }
     } else {
-        if (senhaConfirmar.value != senhaValor) {
+        let senhaConfirmarValor = senhaConfirmar.value;
+        if (senhaConfirmarValor != senhaValor && senhaConfirmarValor.length >= senhaValor.length) {
             addClass(senhaConfirmar, 'invalido');
             removeClass(senhaConfirmar, 'valido');
             removeClass(erroSenhaConfirmar, 'sumir');
-        } else {
+        } else if (senhaConfirmarValor.length >= senhaValor.length) {
             addClass(senhaConfirmar, 'valido');
             removeClass(senhaConfirmar, 'invalido');
+            addClass(erroSenhaConfirmar, 'sumir')
+        } else {
+            removeClass(senhaConfirmar, 'invalido', 'valido');
             addClass(erroSenhaConfirmar, 'sumir')
         }
     }
 }
+function ativarGenero() {
+    let generoValor = genero.value;
+
+    if (generoValor === 'Outro') {
+        removeClass(casoOutro, 'sumir');
+    } else {
+        addClass(casoOutro, 'sumir');
+        generoAlternativo = false;
+    }
+}
 
 function verificarGenero() {
-    let generoValor = genero.value;
-    let div = document.getElementById('casoOutro');
-    if (generoValor === 'Outro') {
-        removeClass(div, 'sumir');
+    let outroGeneroValor = outroGenero.value;
+
+    generoAlternativo = true;
+    if (outroGeneroValor.length <= 2) {
+        addClass(outroGenero, 'invalido')
+        removeClass(outroGenero, 'valido')
     } else {
-        addClass(div, 'sumir');
+        addClass(outroGenero, 'valido')
+        removeClass(outroGenero, 'invalido')
+    }
+}
+
+function verificarData() {
+    const data = new Date();
+    const dataPassada = new Date(1920, 0, 1);
+
+    let dataPassadaFormatada = `${dataPassada.getFullYear()}-${String(dataPassada.getMonth() + 1).padStart(2, '0')}-${dataPassada.getDate()}`;
+
+    let dataFormatada = `${data.getFullYear()}-${String(data.getMonth() + 1).padStart(2, '0')}-${data.getDate()}`;
+
+    let idadeValor = idade.value;
+
+    if (idadeValor < dataPassadaFormatada && idadeValor.length === 10) {
+        addClass(idade, 'invalido');
+        removeClass(idade, 'valido');
+        addErro(erroIdade, 'A ano inserido não pode ser anterior a 1920!');
+    } else if (idadeValor >= dataFormatada || idadeValor.length > 10) {
+        addClass(idade, 'invalido');
+        removeClass(idade, 'valido');
+        addErro(erroIdade, 'A idade não pode ser maior ou igual a data atual!');
+    } else {
+        addClass(idade, 'valido');
+        removeClass(idade, 'invalido');
+        addClass(erroIdade, 'sumir')
     }
 }
 
@@ -96,6 +147,14 @@ function limparClass() { // FUNÇÃO QUE LIMPA A CLASSE DE INVÁLIDO OU VÁLIDO 
     // REMOVENDO AS CLASSES DA CONFIRMAÇÃO DE SENHA
     if (erroSenhaConfirmar.classList.contains('sumir')) {
         removeClass(senhaConfirmar, 'invalido', 'valido');
+    }
+    // REMOVENDO AS CLASSES DA DATA
+    if (erroIdade.classList.contains('sumir')) {
+        removeClass(erroIdade, 'invalido', 'valido');
+    }
+    // REMOVENDO AS CLASSES DA INPUT DE OUTRO GENERO (VALOR BOOLEANO) TRUE = TEM GENERO DIVERSO
+    if (generoAlternativo) {
+        removeClass(outroGenero, 'invalido', 'valido');
     }
 }
 

@@ -15,6 +15,8 @@ tipo char(1) not null
 
 insert into usuario values (default, 'Tawan Lander', 'tlander2007@gmail.com', 'Masculino', '2007-04-02', 'SenhaFortona12#', 0, 'a');
 
+select * from usuario;
+
 create table quiz(
 id int primary key auto_increment,
 nome varchar(60) not null,

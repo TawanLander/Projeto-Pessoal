@@ -11,24 +11,14 @@
 </head>
 <body>
     <header>
-      <div class="logo">Logo Temporária</div>
-
+      <div class="logo">Geequiz</div>
       <div class="container">
         <!--Parte do INÍCIO-->
-        <span><a href="./index.html">
-          <svg width="25px" height="25px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 6V15H6V11C6 9.89543 6.89543 9 8 9C9.10457 9 10 9.89543 10 11V15H15V6L8 0L1 6Z" fill="#FFFFFF"/>
-            </svg>
-          </svg>Início</a></span>
-          <!--Parte de LOGIN-->
-        <span><a class='atual' href="#"><svg width="25px" height="25px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" fill="#FFFFFF"/>
-          <path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" fill="#FFFFFF"/></svg>Login</a></span>
+        <a class="a-resto" href="./index.html">Início</a>
           <!--Parte SOBRE NÓS-->
-        <span><a href=""><svg width="25px" height="25px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9.00001 0H7.00001L5.51292 4.57681L0.700554 4.57682L0.0825195 6.47893L3.97581 9.30756L2.48873 13.8843L4.10677 15.0599L8.00002 12.2313L11.8933 15.0599L13.5113 13.8843L12.0242 9.30754L15.9175 6.47892L15.2994 4.57681L10.4871 4.57681L9.00001 0Z" fill="#FFFFFF"/>
-          </svg>Sobre Nós</a></span>
-      </div>
+        <a class="a-resto" href="./sobre.html">Sobre Nós</a>
+          <!--Parte de LOGIN-->
+        <a class="atual animation-header" href="./login.html">Login</a>
     </header>
     <main>
         <div class="container">
@@ -41,7 +31,7 @@
                 <input spellcheck="false" type="email" id="ipt-email" placeholder="email@email.com" required onclick="verificarEmail()" oninput="verificarEmail()" onblur="limparClass()">
                 <div id="erro-email" class="erro sumir">Email está incorreto! Verifique a digitação.</div>
                 <label>Gênero</label>
-                <select id="slc-genero" onchange="verificarGenero()">
+                <select id="slc-genero" onchange="ativarGenero()">
                     <option disabled hidden selected>Selecionar</option>
                     <option>Masculino</option>
                     <option>Feminino</option>
@@ -49,17 +39,18 @@
                     <option>Outro</option>
                 </select>
                 <div id="casoOutro" class="casoOutro sumir">
-                    <input spellcheck="false" type="text" id="ipt-outroGenero" placeholder="Gênero">
+                    <input spellcheck="false" type="text" id="ipt-outroGenero" placeholder="Gênero" onblur="limparClass()" onclick="verificarGenero()" oninput="verificarGenero()">
                 </div>
                 <label>Data de Nascimento</label>
                 <input spellcheck="false" type="date" id="ipt-idade" oninput="verificarData()" onclick="verificarData()" onblur="limparClass()">
+                <div id="erro-idade" class="erro sumir"></div>
                 <label>Senha</label>
                 <input spellcheck="false" type="password" id="ipt-senha" placeholder="******" required oninput="verificarSenha()" onclick="verificarSenha()" onblur="limparClass()">
                 <div id="erro-senha" class="erro sumir"></div>
                 <label>Confirme a Senha</label>
                 <input spellcheck="false" type="password" id="ipt-senhaConfirmar" placeholder="******" required oninput="verificarSenha(1)" onclick="verificarSenha(1)" onblur="limparClass()">
                 <div id="erro-senhaConfirmar" class="erro sumir">As senhas devem ser iguais</div>
-                <button type="submit" class="btn-importante" onclick="cadastrar()">Cadastrar</button>
+                <button type="submit" class="btn-importante" onclick="cadastrar()">Avançar</button>
                 <div class="mudar">
                     <h4>Já tem cadastro? <a href="./login.html">Login</a></h4>
                 </div>
@@ -67,6 +58,6 @@
             </div>
         </div>
     </main>
-    <footer></footer>
+    <footer>&copy; 2026 Geequiz - Todos os Direitos Reservados</footer>
 </body>
 </html>
