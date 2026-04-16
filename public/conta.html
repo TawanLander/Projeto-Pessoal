@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="view-transition" content="same-origin">
+    <title>Vou Pensar</title>
+    <link rel="stylesheet" href="./sources/style.css" />
+    <link rel="icon" href="" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./sources/script.js" defer></script>
+</head>
+<body>
+    <header>
+      <div class="logo">
+        <svg width="200" height="50" viewBox="0 0 200 60">
+            <g transform="translate(10,10)">
+                <path d="M15,5 Q20,0,30,5 T45,15 Q50,25,45,35 L40,40 Q30,50,20,40 L5,20 Q0,10,10,5 Z" fill="#4c4cff" />
+                <path d="M22,18 L32,28 L42,10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </g>
+            <text x="65" y="45" font-family="'Caveat Brush', cursive" font-size="40" fill="#fff">
+                Gee<tspan fill="#4c4cff">Quiz</tspan>
+            </text>
+        </svg>
+      </div>
+      <div class="container">
+        <!--Parte do INÍCIO-->
+        <a class="a-resto" href="./index.html">Início</a>
+          <!--Parte SOBRE NÓS-->
+        <a class="a-resto" href="./sobre.html">Sobre Nós</a>
+          <!--Parte de LOGIN-->
+        <a class="animation-header" href="./login.html">Login</a>
+    </header>
+    <main>
+        <div class="container">
+            <div class="login">
+                <div class="info">
+                <h1>Informações</h1>
+                    <span id="span-nome"><h2>Nome: <span id="bd-nome"></span></h2></span>
+                    <span id="span-idade"><h2>Idade: <span id="bd-idade"></span></h2></span>
+                    <span id="span-genero"><h2>Gênero: <span id="bd-genero"></span></h2></span>
+                    <span id="span-quizes"><h2>Quizes Concluídos: <span id="bd-quizes"></span></h2></span>
+                    <span id="span-senha"><h2>Senha: <span id="bd-senha"></span></h2></span>
+                    <button class="btn-importante" onclick="alterarValores()">Alterar Valores</button>
+                </div>
+            </div>
+            <div class="login">
+                <div class="info">
+                    <h1 style="text-align: center;">Métricas</h1>
+                    <div class="dashs">
+                        <canvas id="chart-quizes"></canvas>
+                    </div>
+                    <div class="dashs">
+                        <canvas id="chart-idade"></canvas>
+                    </div>
+                    <div class="dashs">
+                        <canvas id="chart-mediaQuizes"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>&copy; 2026 Geequiz - Todos os Direitos Reservados <br> Dados para contato: <br> WhatsApp: 11 - 9191-0808 <br> Email: suporte@geequiz.com</footer>
+</body>
+</html>

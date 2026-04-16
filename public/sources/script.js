@@ -13,10 +13,34 @@ const erroIdade = document.getElementById('erro-idade');
 const erroSenhaConfirmar = document.getElementById('erro-senhaConfirmar');
 
 var generoAlternativo = false;
+var generoValor = '';
+
 const outroGenero = document.getElementById('ipt-outroGenero');
 
-function verificarNome(){
+/*
+CONSTANTES PARA PEGAR OS SPANS DA PARTE DA ABA DE CONTA (CONTA.HTML) PARA MUDAR OS VALORES SE QUISER
+*/
+
+const spanNome = document.getElementById('span-nome');
+const spanIdade = document.getElementById('span-idade');
+const spanGenero = document.getElementById('span-genero');
+const spanQuizes = document.getElementById('span-quizes');
+const spanSenha = document.getElementById('span-senha');
+
+/*
+CONSTANTES PARA PEGAR OS ID'S DOS CHARTS
+*/
+
+function verificarNome() {
     let nomeValor = nome.value;
+
+    let separar = nomeValor.split(' ');
+
+    let nomeFormatado = '';
+
+    for (let i = 0; i < separar.length; ++i) {
+        nomeFormatado += `${separar[i].slice(0, 1).toUpperCase() + separar[i].slice(1).toLowerCase()} `
+    }
 }
 
 function verificarEmail() {
@@ -25,7 +49,7 @@ function verificarEmail() {
     let indexEspecial = emailValor.indexOf('@');
     let indexPonto = emailValor.indexOf('.com');
 
-    if (emailValor.length != 0) {
+    if (emailValor.length >= 10) {
         if (emailValor.length >= 10 && indexEspecial >= 0 && indexPonto >= 0 && indexEspecial < indexPonto && !emailValor.includes(' ')) {
             addClass(email, 'valido');
             removeClass(email, 'invalido');
@@ -71,18 +95,20 @@ function verificarSenha(tipo) {
             }
         }
     } else {
-        let senhaConfirmarValor = senhaConfirmar.value;
-        if (senhaConfirmarValor != senhaValor && senhaConfirmarValor.length >= senhaValor.length) {
-            addClass(senhaConfirmar, 'invalido');
-            removeClass(senhaConfirmar, 'valido');
-            removeClass(erroSenhaConfirmar, 'sumir');
-        } else if (senhaConfirmarValor.length >= senhaValor.length) {
-            addClass(senhaConfirmar, 'valido');
-            removeClass(senhaConfirmar, 'invalido');
-            addClass(erroSenhaConfirmar, 'sumir')
-        } else {
-            removeClass(senhaConfirmar, 'invalido', 'valido');
-            addClass(erroSenhaConfirmar, 'sumir')
+        if (senhaConfirmarValor.length > 0) {
+            let senhaConfirmarValor = senhaConfirmar.value;
+            if (senhaConfirmarValor != senhaValor && senhaConfirmarValor.length >= senhaValor.length) {
+                addClass(senhaConfirmar, 'invalido');
+                removeClass(senhaConfirmar, 'valido');
+                removeClass(erroSenhaConfirmar, 'sumir');
+            } else if (senhaConfirmarValor.length >= senhaValor.length) {
+                addClass(senhaConfirmar, 'valido');
+                removeClass(senhaConfirmar, 'invalido');
+                addClass(erroSenhaConfirmar, 'sumir')
+            } else {
+                removeClass(senhaConfirmar, 'invalido', 'valido');
+                addClass(erroSenhaConfirmar, 'sumir')
+            }
         }
     }
 }
@@ -91,6 +117,7 @@ function ativarGenero() {
 
     if (generoValor === 'Outro') {
         removeClass(casoOutro, 'sumir');
+        generoAlternativo = true;
     } else {
         addClass(casoOutro, 'sumir');
         generoAlternativo = false;
@@ -100,7 +127,6 @@ function ativarGenero() {
 function verificarGenero() {
     let outroGeneroValor = outroGenero.value;
 
-    generoAlternativo = true;
     if (outroGeneroValor.length <= 2) {
         addClass(outroGenero, 'invalido')
         removeClass(outroGenero, 'valido')
@@ -249,3 +275,107 @@ function login() {
 
     return false;
 }
+
+var chartQuizes = new Chart(document.getElementById('chart-quizes').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Masculino', 'Feminino', 'Não Identificado', 'Outros'],
+        datasets: [{
+            borderColor: ['navy', 'lightpink', 'gray', 'black'],
+            backgroundColor: ['navy', 'lightpink', 'gray', 'black'],
+            data: [30, 40, 5, 2]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                display: false
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Distribuição de Gênero',
+                align: 'center',
+                position: 'top',
+                font: {size: 24, weight: 'bold'},
+                padding: {top: 40, bottom: 10},
+                color: '#1c1c1c'
+            }
+        }
+    }
+
+});
+
+var chartIdades = new Chart(document.getElementById('chart-idade').getContext('2d'), {
+    type: 'bar',
+    data: {
+        labels: ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-79', '80+'],
+        datasets: [{
+            backgroundColor: ['lightblue', '#1c1c1c'],
+            data: [30, 40, 5, 2, 10, 10, 10, 10]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                display: false
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Faixa Etária',
+                align: 'center',
+                position: 'top',
+                font: {size: 24, weight: 'bold'},
+                padding: {top: 40, bottom: 10},
+                color: '#1c1c1c'
+            }
+        }
+    }
+});
+
+var chartMediaQuizes = new Chart(document.getElementById('chart-mediaQuizes').getContext('2d'), {
+    type: 'bar',
+    data: {
+        labels: ['1-10', '11-20', '21-30', '31-40', '41+'],
+        datasets: [{
+            backgroundColor: ['rgb(0, 0, 71)', 'rgb(0, 72, 94)'],
+            data: [30, 40, 5, 2, 10, 10, 10, 10]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                display: false
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Quizes Feitos por Usuário',
+                align: 'center',
+                position: 'top',
+                font: {size: 24, weight: 'bold'},
+                padding: {top: 40, bottom: 10},
+                color: '#1c1c1c'
+            }
+        }
+    }
+});
