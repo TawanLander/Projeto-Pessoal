@@ -1,23 +1,20 @@
-var database = require("../database/config");
+var bd = require('./database/config');
 
-function buscarAquariosPorEmpresa(empresaId) {
+function listar(){
+    let query = `select * from quizes`;
 
-  var instrucaoSql = `SELECT * FROM aquario a WHERE fk_empresa = ${empresaId}`;
-
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
-}
-
-function cadastrar(empresaId, descricao) {
-  
-  var instrucaoSql = `INSERT INTO (descricao, fk_empresa) aquario VALUES (${descricao}, ${empresaId})`;
-
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
-}
+    return bd.executar(query);
+};
 
 
-module.exports = {
-  buscarAquariosPorEmpresa,
-  cadastrar
-}
+function cadastrar(nome){
+    let query = `ìnsert into quizes values (?)`;
+
+    return bd.executar(query, [nome]);
+};
+
+
+module.exports = [
+    listar,
+    executar
+];
