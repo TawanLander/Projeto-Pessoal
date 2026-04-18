@@ -1,10 +1,9 @@
-var bd = require('./database/config');
+var bd = require('../database/config');
 
 function listar(){
-    let query = `select * from quizes`;
-
+    let query = 'SELECT * FROM quizes';
     return bd.executar(query);
-};
+}
 
 
 function cadastrar(nome){
@@ -16,5 +15,5 @@ function cadastrar(nome){
 
 module.exports = [
     listar,
-    executar
+    listar
 ];

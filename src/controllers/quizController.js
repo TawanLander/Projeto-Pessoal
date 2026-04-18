@@ -1,4 +1,4 @@
-var quiz = require('./models/quizModel');
+var quiz = require('../models/quizModel');
 
 function listar(req, res) {
     quiz.listar().then(function(resultado){

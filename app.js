@@ -19,6 +19,7 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var avisosRouter = require("./src/routes/avisos");
 var quizRouter = require('./src/routes/quiz');
+var bd = require('./src/database/config.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,6 +31,20 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
 app.use("/quiz", quizRouter);
+
+/*
+Para executar um select no banco de dados na hr que a api for ligada, setando um endpoint para dar fetch no front e mostrar todos os quizes.
+*/
+app.get('/quizes', (req, res) => {
+    let query = 'select * from quiz';
+
+    bd.executar(query).then(resultado => {
+        res.json(resultado);
+    }).catch(error => {
+        console.error('Erro ao pegar dados do BD')
+    })
+});
+
 
 app.listen(PORTA_APP, function () {
     console.log(`
