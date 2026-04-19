@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="view-transition" content="same-origin">
     <title>Vou Pensar</title>
-    <link rel="stylesheet" href="./sources/style.css" />
+    <link rel="stylesheet" href="./sources/css/all.css" />
+    <link rel="stylesheet" href="./sources/css/conta.css" />
     <link rel="icon" href="" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./sources/js/script.js"></script>
     <script src="./sources/js/main.js" defer></script>
     <script src="./sources/js/chart.js" defer></script>
+    <script src="./sources/js/conta.js" defer></script>
 </head>
-<body>
+<body onload="verificandoSessao(), verificarSessao()">
     <header>
       <div class="logo">
         <svg width="200" height="50" viewBox="0 0 200 60">
@@ -25,28 +27,28 @@
             </text>
         </svg>
       </div>
-      <div class="container">
+      <div class="container" id="container-header">
         <!--Parte do INÍCIO-->
         <a class="a-resto" href="./index.html">Início</a>
           <!--Parte SOBRE NÓS-->
         <a class="a-resto" href="./sobre.html">Sobre Nós</a>
           <!--Parte de LOGIN-->
-        <a class="animation-header" href="./login.html">Login</a>
     </header>
     <main>
         <div class="container">
-            <div class="login">
+            <div class="parte">
                 <div class="info">
                 <h1>Informações</h1>
                     <span id="span-nome"><h2>Nome: <span id="bd-nome"></span></h2></span>
-                    <span id="span-idade"><h2>Idade: <span id="bd-idade"></span></h2></span>
+                    <span id="span-idade"><h2>Idade: <span id="bd-idade"></span><span> anos</span></h2></span>
                     <span id="span-genero"><h2>Gênero: <span id="bd-genero"></span></h2></span>
                     <span id="span-quizes"><h2>Quizes Concluídos: <span id="bd-quizes"></span></h2></span>
+                    <span id="span-nome"><h2>Email: <span id="bd-email"></span></h2></span>
                     <span id="span-senha"><h2>Senha: <span id="bd-senha"></span></h2></span>
                     <button class="btn-importante" onclick="alterarValores()">Alterar Valores</button>
                 </div>
             </div>
-            <div class="login">
+            <div class="parte">
                 <div class="info">
                     <h1 style="text-align: center;">Métricas</h1>
                     <div class="dashs">

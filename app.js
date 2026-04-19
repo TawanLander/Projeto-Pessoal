@@ -36,15 +36,34 @@ app.use("/quiz", quizRouter);
 Para executar um select no banco de dados na hr que a api for ligada, setando um endpoint para dar fetch no front e mostrar todos os quizes.
 */
 app.get('/quizes', (req, res) => {
-    let query = 'select * from quiz';
+    let query = 'select * from quiz order by avaliacao';
 
     bd.executar(query).then(resultado => {
         res.json(resultado);
     }).catch(error => {
-        console.error('Erro ao pegar dados do BD')
+        console.error('Erro ao pegar dados do BD em Quiz')
     })
 });
 
+app.get('/quizes/perguntas', (req, res) => {
+    let query = 'select * from perguntas';
+
+    bd.executar(query).then(resultado => {
+        res.json(resultado);
+    }).catch(e => {
+        console.log('Erro ao pegar dados do BD em Perguntas')
+    });
+})
+
+app.get('/quizes/opcoes', (req, res) => {
+    let query = 'select * from opcoes';
+
+    bd.executar(query).then(resultado => {
+        res.json(resultado);
+    }).catch(e => {
+        console.log('Erro ao pegar dados do BD em Opcoes')
+    });
+})
 
 app.listen(PORTA_APP, function () {
     console.log(`

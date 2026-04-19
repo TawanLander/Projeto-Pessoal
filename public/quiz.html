@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="view-transition" content="same-origin">
     <title>Vou Pensar</title>
-    <link rel="stylesheet" href="./sources/style.css" />
+    <link rel="stylesheet" href="./sources/css/all.css" />
+    <link rel="stylesheet" href="./sources/css/quiz.css">
     <link rel="icon" href="" />
     <script src="./sources/js/script.js" defer></script>
     <script src="./sources/js/main.js" defer></script>
+    <script src="./sources/js/quiz.js" defer></script>
 </head>
-<body>
+<body onload="verificarSessao(), pegarDados()">
     <header>
       <div class="logo">
         <svg width="200" height="50" viewBox="0 0 200 60">
@@ -23,16 +25,15 @@
             </text>
         </svg>
       </div>
-      <div class="container">
+      <div class="container" id="container-header">
         <!--Parte do INÍCIO-->
         <a class="a-resto" href="./index.html">Início</a>
           <!--Parte SOBRE NÓS-->
         <a class="a-resto" href="./sobre.html">Sobre Nós</a>
-          <!--Parte de LOGIN-->
-        <a class="animation-header" href="./login.html">Login</a>
+          <!--Parte de LOGIN ou da CONTA-->
     </header>
     <main>
-
+     <div class="quiz" id="quiz"></div>
     </main>
     <footer>&copy; 2026 Geequiz - Todos os Direitos Reservados <br> Dados para contato: <br> WhatsApp: 11 - 9191-0808 <br> Email: suporte@geequiz.com</footer>
 </body>

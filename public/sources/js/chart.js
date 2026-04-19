@@ -134,13 +134,6 @@ function plotarDadosMedia(array){
     });
 }
 
+plotarDadosGeneros([30, 40, 10, 2]) // Máx 4
 plotarDadosIdade([10, 10, 0, 10, 20, 40, 50, 50]); // Máx 8
 plotarDadosMedia([10, 10, 10, 20, 30]); // Máx 5
-
-fetch('/quiz').then(function(response){
-    return response.json;
-}).then(function(array){
-    plotarDadosGeneros(array);
-}).catch(function(error){
-    console.log(error);
-});

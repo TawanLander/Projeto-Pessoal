@@ -1,3 +1,5 @@
+const sessao = JSON.parse(sessionStorage.getItem('usuario'));
+
 function obterDados() {
     fetch('/quizes').then(response => {
         if (response.ok) {
@@ -17,7 +19,11 @@ function plotarDados(r) {
     
     r.forEach(item => {
     let msg = '';
-    msg += `<div class="quiz" onclick="salvarDados(${item.id})">`
+    if(sessao){
+        msg += `<div class="quiz" onclick="salvarDados(${item.id})">`
+    } else {
+        msg += `<div class="quiz" onclick="window.location='./login.html'">`
+    }
 
     if(item.img != null){
         msg += `<div><img src="${item.img}"></div>`

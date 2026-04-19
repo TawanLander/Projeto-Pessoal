@@ -13,23 +13,17 @@ function autenticar(req, res) {
         usuarioModel.autenticar(email, senha)
             .then(
                 function (resultadoAutenticar) {
-                    console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
-
                     if (resultadoAutenticar.length == 1) {
-                        console.log(resultadoAutenticar);
-
                         res.json({
                             id: resultadoAutenticar[0].id,
                             email: resultadoAutenticar[0].email,
                             nome: resultadoAutenticar[0].nome,
                             genero: resultadoAutenticar[0].genero,
-                            dtNascimento: resultadoAutenticar[0].dtNascimento,
+                            idade: resultadoAutenticar[0].idade,
                             senha: resultadoAutenticar[0].senha,
                             tipo: resultadoAutenticar[0].tipo
                         });
-                    }
-                    if (resultadoAutenticar.length == 0) {
+                    } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
                         res.status(403).send("Mais de um usuário com o mesmo login e senha!");

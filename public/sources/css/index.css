@@ -1,0 +1,102 @@
+.quizes {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-content: flex-start;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.quiz {
+    width: calc(25% - 25px);
+    min-width: 400px;
+    min-height: 600px;
+    height: auto;
+    border-radius: 15px;
+    border: 2px solid var(--preto);
+    align-items: start;
+    justify-content: start;
+    text-align: start;
+    box-shadow: 0 5px 15px var(--box-shadow);
+    background-color: var(--preto-fosco);
+    cursor: pointer;
+}
+
+.quiz h1 {
+    font-weight: 550;
+    font-size: xx-large;
+    color: var(--cor-texto-quiz)
+}
+
+.geral {
+    border-top: 2px solid var(--cor-texto);
+    padding: 10px;
+}
+
+.content {
+    font-weight: 550;
+    font-size: x-large;
+    color: var(--cor-texto-quiz)
+}
+
+.featured {
+    width: 47.5%;
+}
+
+.bg-img {
+    background-image: url(https://imgs.search.brave.com/Ot5Z2KERv-HQ8c-ib5zHx2hcogjDPxhsEO8qUDLLSP8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93MC5w/ZWFrcHguY29tL3dh/bGxwYXBlci8xODAv/OTYyL0hELXdhbGxw/YXBlci1hbmltZS1q/dWp1dHN1LWthaXNl/bi1zdWt1bmEtanVq/dXRzdS1rYWlzZW4t/dGh1bWJuYWlsLmpw/Zw);
+    color: white;
+    background-size: 100% 100%;
+    background-position: center center;
+}
+
+.carroussel {
+    margin: 100px auto;
+    width: 97%;
+    border: 5px solid var(--preto-fosco);
+    display: flex;
+    overflow-x: auto;
+    border-radius: 5px;
+}
+
+.carroussel::-webkit-scrollbar {
+    display: none;
+}
+
+.group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    animation: girar 20s infinite linear;
+    padding-right: 1rem;
+}
+
+.cards {
+    flex: 0 0 9em;
+    height: 6em;
+    padding: 1em;
+    background: cornflowerblue;
+    font-size: 3em;
+    border-radius: .2em;
+    text-align: center;
+    align-content: center;
+}
+
+@keyframes girar {
+    from {
+        translate: 0;
+    }
+
+    to {
+        translate: -100%;
+    }
+}
+
+img{
+    width: 100%;
+    border-radius: 8px;
+}

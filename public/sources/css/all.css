@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: large;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+:root {
+    --cor-texto-quiz: rgb(255, 255, 255, .9);
+    --preto: black;
+    --destaque: rgb(76, 76, 255);
+    --cor-texto: #fff;
+    --box-shadow: rgba(0, 0, 0, .35);
+    --bgc: whitesmoke;
+    --cinza: lightgray;
+    --preto-fosco: #1a1a1a;
+}
+
+::-webkit-scrollbar {
+    width: 14px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--preto-fosco);
+}
+
+::-webkit-scrollbar-thumb {
+    width: 100%;
+    height: 10px;
+    background: var(--cor-texto);
+    border: 3px solid var(--preto-fosco);
+    border-radius: 20px;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    background-color: var(--preto);
+    color: var(--cor-texto);
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+header .logo {
+    width: 15%;
+}
+
+header .container {
+    width: 100%;
+    gap: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0 20px;
+}
+
+header a {
+    color: var(--cor-texto);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.atual {
+    font-weight: 800;
+}
+
+main {
+    width: 100%;
+    background: radial-gradient(#4c4cff11 2px, transparent 2px), radial-gradient(#4c4cff11 2px, #e5e5f7 2px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 0;
+    flex: 1;
+    gap: 20px;
+}
+
+main .container {
+    width: 40%;
+    border: 2px solid var(--preto);
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 15px 45px 15px var(--box-shadow);
+    background-color: var(--bgc);
+    display: flex;
+    flex-direction: column;
+}
+
+main a {
+    text-decoration: none;
+    color: var(--preto)
+}
+
+footer {
+    background-color: var(--preto-fosco);
+    color: var(--cor-texto);
+    width: 100%;
+    height: min(30px, auto);
+    flex-shrink: 0;
+}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.animation-header {
+    background-color: var(--destaque);
+    color: var(--cor-texto);
+    padding: 7px 33px;
+    border-radius: 15px;
+    margin: -5px;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.a-resto {
+    background-color: var(--cor-texto);
+    color: var(--preto-fosco);
+    padding: 7px 33px;
+    margin: -5px;
+    border-radius: 15px;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.animation-header::before,
+.animation-header::after,
+.a-resto::after,
+.a-resto::before {
+    content: '';
+    position: absolute;
+    transform: translateZ(-1px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    animation: 3s spin linear infinite;
+    border-radius: 15px;
+    opacity: 0;
+    transition: all .3s ease;
+}
+
+.animation-header::before,
+.animation-header::after {
+    background-image: conic-gradient(from var(--angle), #a8edea 0%, #fedfe7 25%, transparent 50%, #fac3e0 75%, #a8edea 100%);
+}
+
+.a-resto::after,
+.a-resto::before {
+    background-image: conic-gradient(from var(--angle), #fff5e1 0%, #ffdb89 25%, transparent 50%, #ffdb89 75%, #fff5e1 100%)
+}
+
+.animation-header::after,
+.a-resto::after {
+    filter: blur(1.5rem);
+}
+
+.animation-header:hover::after,
+.a-resto:hover::after {
+    opacity: 0.7;
+}
+
+.animation-header:hover::before,
+.a-resto:hover::before {
+    opacity: 1;
+}
+
+@keyframes spin {
+    from {
+        --angle: 0deg;
+    }
+
+    to {
+        --angle: 360deg;
+    }
+}
+
+.btn-importante {
+    font-weight: 500;
+    letter-spacing: .5px;
+    padding: 5px 40px;
+    border: 2px solid var(--preto-fosco);
+    border-radius: 5px;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: transparent;
+    margin: 30px 0 10px;
+    transition: all .6s ease-in-out;
+}
+
+.btn-importante:hover {
+    background-image: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    transform: scale(1.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
