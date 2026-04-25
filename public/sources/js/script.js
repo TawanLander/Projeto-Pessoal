@@ -27,10 +27,6 @@ const spanGenero = document.getElementById('span-genero');
 const spanQuizes = document.getElementById('span-quizes');
 const spanSenha = document.getElementById('span-senha');
 
-/*
-CONSTANTES PARA PEGAR OS ID'S DOS CHARTS
-*/
-
 function verificarNome() {
     let nomeValor = nome.value;
 
@@ -46,11 +42,16 @@ function verificarNome() {
 function verificarEmail() {
     let emailValor = email.value;
 
-    let indexEspecial = emailValor.indexOf('@');
-    let indexPonto = emailValor.indexOf('.com');
-
-    if (emailValor.length >= 10) {
-        if (emailValor.length >= 10 && indexEspecial >= 0 && indexPonto >= 0 && indexEspecial < indexPonto && !emailValor.includes(' ')) {
+    let partes = emailValor.split('@');
+    
+    if (partes.length === 2) {
+        let primeiro = partes[0];
+        let segundo = partes[1];
+        let ponto = partes[1].indexOf('.');
+        if (!emailValor.includes(' ') && 
+            primeiro.length >= 1 && primeiro.length <= 64 &&
+            segundo.length >= 1 && segundo.length <= 64 &&
+            ponto >= 1 && ponto != segundo.length - 1) {
             addClass(email, 'valido');
             removeClass(email, 'invalido');
             addClass(erroEmail, 'sumir');
@@ -95,8 +96,8 @@ function verificarSenha(tipo) {
             }
         }
     } else {
+        let senhaConfirmarValor = senhaConfirmar.value;
         if (senhaConfirmarValor.length > 0) {
-            let senhaConfirmarValor = senhaConfirmar.value;
             if (senhaConfirmarValor != senhaValor && senhaConfirmarValor.length >= senhaValor.length) {
                 addClass(senhaConfirmar, 'invalido');
                 removeClass(senhaConfirmar, 'valido');
@@ -112,6 +113,7 @@ function verificarSenha(tipo) {
         }
     }
 }
+
 function ativarGenero() {
     let generoValor = genero.value;
 

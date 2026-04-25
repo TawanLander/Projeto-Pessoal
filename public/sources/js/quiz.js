@@ -15,7 +15,7 @@ function pegarDados() {
                 let perguntas = r.filter(item => Number(item.fkQuiz) === Number(quiz))
                 fetch('/quizes/opcoes').then(response => {
                     response.json().then(r => {
-                        let opcoes = r.filter(item => Number(item.fkQuiz) === Number(quiz))
+                        let opcoes = r.filter(item => Number(item.fkQuiz) === Number(quiz));
                         plotarPerguntas(perguntas, opcoes);
                     })
                 })

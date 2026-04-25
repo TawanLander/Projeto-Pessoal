@@ -33,8 +33,9 @@ app.use("/avisos", avisosRouter);
 app.use("/quiz", quizRouter);
 
 /*
-Para executar um select no banco de dados na hr que a api for ligada, setando um endpoint para dar fetch no front e mostrar todos os quizes.
+Para executar um select no banco de dados na hora que a api for ligada, setando um endpoint para dar fetch no front e mostrar todos os quizes.
 */
+
 app.get('/quizes', (req, res) => {
     let query = 'select * from quiz order by avaliacao';
 
@@ -45,8 +46,11 @@ app.get('/quizes', (req, res) => {
     })
 });
 
-app.get('/quizes/perguntas', (req, res) => {
-    let query = 'select * from perguntas';
+app.post('/quizes/perguntas', (req, res) => {
+
+    let fk = req.body.fkQUiz
+
+    let query = 'select * from perguntas WHERE ${}';
 
     bd.executar(query).then(resultado => {
         res.json(resultado);
