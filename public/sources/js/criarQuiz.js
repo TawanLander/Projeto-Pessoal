@@ -14,20 +14,33 @@ function montagemQuiz(i) {
             document.getElementById('titulo-quiz-template').innerHTML = 'Insira o título';
         }
     } else if (i === 2) {
-        if(generoQuiz.value != ''){
-            document.getElementById('genero-quiz-template').innerHTML = `Tipo: ${tipoQuiz.value}`;
-        } else {
-            document.getElementById('genero-quiz-template').innerHTML = 'Insira o tipo'
-        }
+        document.getElementById('genero-quiz-template').innerHTML = `Gênero: ${generoQuiz.value}`;
     } else if (i === 3) {
-        if(tituloQuiz.value != ''){
-            document.getElementById('tipo-quiz-template').innerHTML = `Gênero: ${generoQuiz.value}`;
-        } else {
-            document.getElementById('tipo-quiz-template').innerHTML = 'Insira o gênero';
-        }
+        document.getElementById('tipo-quiz-template').innerHTML = `Tipo: ${tipoQuiz.value}`;
     } else if (i === 4) {
         document.getElementById('img-quiz-template').src = imgQuiz.value;
     } else {
         document.getElementById('nome-quiz-template').innerHTML = `Feito por: ${JSON.parse(sessionStorage.getItem('usuario')).nome}`
     }
+}
+
+function criarQuiz(){
+
+}
+
+function prosseguirPerguntas(o){
+    if(o === 'i'){
+        document.getElementById('criar-quiz').classList.add('sumir');
+        document.getElementById('criar-perguntas').classList.remove('sumir');
+        adicionarPergunta()
+    } else {
+        document.getElementById('criar-quiz').classList.remove('sumir');
+        document.getElementById('criar-perguntas').classList.add('sumir');
+    }
+}
+
+function adicionarPergunta(){
+    const pergunta = document.getElementById('criar-perguntas');
+
+    pergunta.innerHTML += ``
 }

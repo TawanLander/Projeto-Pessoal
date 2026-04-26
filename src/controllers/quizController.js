@@ -1,7 +1,23 @@
 var quiz = require('../models/quizModel');
 
-function listar(req, res) {
-    quiz.listar().then(function(resultado){
+function listarQuizes(req, res) {
+    quiz.listarQuizes().then(resultado => {
+        res.status(200).json(resultado);
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage);
+    });
+};
+
+function listarPerguntas(req, res, fk) {
+    quiz.listarPerguntas(fk).then(resultado => {
+        res.status(200).json(resultado);
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage);
+    });
+};
+
+function listarOpcoes(req, res, fk) {
+    quiz.listarOpcoes(fk).then(resultado => {
         res.status(200).json(resultado);
     }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);
@@ -22,7 +38,10 @@ function cadastrar(req, res){
     });
 };
 
-module.exports = [
-    listar,
+module.exports = {
+    listarQuizes,
+    listarPerguntas,
+    listarOpcoes,
     cadastrar
-];
+
+};

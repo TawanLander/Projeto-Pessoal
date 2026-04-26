@@ -4,8 +4,6 @@ function obterDados() {
     fetch('/quizes').then(response => {
         if (response.ok) {
             response.json().then(r => {
-                r.reverse();
-
                 plotarDados(r)
             })
         } else {

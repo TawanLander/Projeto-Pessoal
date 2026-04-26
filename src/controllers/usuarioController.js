@@ -80,7 +80,27 @@ function cadastrar(req, res) {
     }
 }
 
+
+function contarGenero(req, res){
+    usuarioModel.contarGenero(req, res).then(r => {
+        res.status(200).json(r);
+    }).catch(e => {
+        res.status(400).json(e.sqlMessage);
+    });
+}
+
+function contarIdade(req, res){
+    usuarioModel.contarIdade(req, res).then(r => {
+        res.status(200).json(r);
+    }).catch(e => {
+        res.status(400).json(e.sqlMessage);
+    });
+}
+
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    contarGenero,
+    contarIdade
 }

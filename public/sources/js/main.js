@@ -73,14 +73,3 @@ function login() {
 
     return false;
 }
-
-function verificarSessao(){
-    const sessao = JSON.parse(sessionStorage.getItem('usuario'));
-    const div = document.getElementById('container-header');
-    
-    if(sessao){
-        div.innerHTML += `<a href="./conta.html" class="animation-header">Conta</a>`
-    } else {
-        div.innerHTML += `<a class="animation-header" href="./login.html">Login</a>`
-    }
-}

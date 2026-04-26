@@ -8,40 +8,23 @@
     <link rel="stylesheet" href="./sources/css/all.css" />
     <link rel="stylesheet" href="./sources/css/criarQuiz.css" />
     <link rel="icon" href="" />
-    <script src="./sources/js/main.js"></script>
+    <script src="./sources/js/main.js" defer></script>
     <script src="./sources/js/quiz.js" defer></script>
+    <script src="./sources/js/componentesPagina.js" defer></script>
     <script src="./sources/js/criarQuiz.js" defer></script>
   </head>
-  <body onload="verificarSessao(), montagemQuiz(5)">
-    <header>
-      <div class="logo">
-        <svg width="200" height="50" viewBox="0 0 200 60">
-            <g transform="translate(10,10)">
-                <path d="M15,5 Q20,0,30,5 T45,15 Q50,25,45,35 L40,40 Q30,50,20,40 L5,20 Q0,10,10,5 Z" fill="#4c4cff" />
-                <path d="M22,18 L32,28 L42,10" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
-            </g>
-            <text x="65" y="45" font-family="'Caveat Brush', cursive" font-size="40" fill="#fff">
-                Gee<tspan fill="#4c4cff">Quiz</tspan>
-            </text>
-        </svg>
-      </div>
-      <div class="container" id="container-header">
-        <!--Parte do INÍCIO-->
-        <a class="a-resto" href="./index.html">Início</a>
-          <!--Parte SOBRE NÓS-->
-        <a class="a-resto" href="./sobre.html">Sobre Nós</a>
-          <!--Parte de LOGIN ou da CONTA-->
-    </header>
+  <body onload="carregarElementos('criarQuiz'), montagemQuiz(5)">
+    <header></header>
     <main>
         <div class="container">
-          <div class="show">
+          <div id="criar-quiz" class="show">
             <h1>Monte seu quiz! Insira as informações abaixo</h1>
             <label>Imagem do Quiz</label>
             <input type="text" id="quiz-img" placeholder="Imagem do quiz" oninput="montagemQuiz(4)">
             <label>Título do Quiz</label>
             <input type="text" id="quiz-titulo" placeholder="Título do quiz" oninput="montagemQuiz(1)">
             <label>Gênero do Quiz</label>
-            <select id="quiz-genero">
+            <select id="quiz-genero" onchange="montagemQuiz(2)">
               <option hidden selected disabled>Selecione alguma opção!</option>
               <option>Anime</option>
               <option>Filmes</option>
@@ -52,19 +35,17 @@
               <option>Jogos</option>
             </select>
             <label>Tipo do Quiz</label>
-            <select id="quiz-tipo">
+            <select id="quiz-tipo" onchange="montagemQuiz(3)">
               <option hidden selected disabled>Selecione alguma opção!</option>
-              <option>Perguntas</option>
+              <option>Conhecimentos Gerais</option>
+              <option>Conhecimento do tema</option>
               <option>Personalidade</option>
-              <option></option>
-              <option></option>
-              <option></option>
-              <option></option>
             </select>
             <h1>Acompanhe as modificações</h1>
               <div class="quiz">
                 <img id="img-quiz-template">
-                <div class="geral"><h1 id="titulo-quiz-template">Insira o título</h1>
+                <div class="geral">
+                <h1 id="titulo-quiz-template">Insira o título</h1>
                 <div class="content" id="genero-quiz-template">Insira o gênero</div>
                 <div class="content" id="tipo-quiz-template">Insira o tipo</div>
                 <div class="content">Quantidade de perguntas</div>
@@ -72,8 +53,17 @@
                 <div class="content" id="nome-quiz-template"></div>
               </div> 
             </div>
+            <button onclick="prosseguirPerguntas('i')" class="btn-importante">Criar perguntas!</button>
+
           </div>
+          <div id="criar-perguntas" class="show sumir">
+            <h1>Comece sua pergunta!</h1>
+            <button onclick="prosseguirPerguntas('v')" class="btn-importante" style="margin-top: 0;">Voltar</button>
+            <label>Imagem da Pergunta</label>
+            <input type="text" id="pergunta-img" placeholder="Imagem da Pergunta" oninput="montagemPergunta()">
+          </div>
+        </div>
     </main>
-    <footer>&copy; 2026 Geequiz - Todos os Direitos Reservados <br> Dados para contato: <br> WhatsApp: 11 - 9191-0808 <br> Email: suporte@geequiz.com</footer>
+    <footer></footer>
 </body>
 </html>

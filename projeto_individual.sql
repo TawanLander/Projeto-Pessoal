@@ -2,6 +2,7 @@ create database site;
 
 use site;
 show tables;
+select count(genero) from usuario group by genero;
 
 create table usuario(
 id int primary key auto_increment,
@@ -15,6 +16,9 @@ tipo char(1) not null
 );
 
 insert into usuario values (default, 'Tawan Lander', 'tlander2007@gmail.com', 'Masculino', '2007-04-02', 'SenhaFortona12#', 0, 'a');
+insert into usuario values (default, 'Tawan Lander', 'sim@sim.com', 'Feminino', '2007-04-02', 'SenhaFortona15#', 0, 'a');
+insert into usuario values (default, 'Tawan Lander', 'teste@teste.com', 'Prefiro Não Dizer', '2007-04-02', 'SenhaFortona14#', 0, 'a');
+insert into usuario values (default, 'Tawan Lander', 'email@email.com', 'Outro', '2007-04-02', 'SenhaFortona13#', 0, 'a');
 delete from usuario where id = 0;
 select * from usuario;
 

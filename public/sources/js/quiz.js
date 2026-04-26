@@ -8,14 +8,27 @@ function salvarDados(id) {
 function pegarDados() {
     let quiz = sessionStorage.getItem('quiz');
 
-    fetch('/quizes/perguntas').then(response => {
+    fetch('/quizes/perguntas', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            fkQuiz: quiz
+        })
+    }).then(response => {
         if (response.ok) {
-            response.json().then(r => {
-                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-                let perguntas = r.filter(item => Number(item.fkQuiz) === Number(quiz))
-                fetch('/quizes/opcoes').then(response => {
-                    response.json().then(r => {
-                        let opcoes = r.filter(item => Number(item.fkQuiz) === Number(quiz));
+            response.json().then(perguntas => {
+                fetch('/quizes/opcoes', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        fkQuiz: quiz
+                    })
+                }).then(response => {
+                    response.json().then(opcoes => {
                         plotarPerguntas(perguntas, opcoes);
                     })
                 })

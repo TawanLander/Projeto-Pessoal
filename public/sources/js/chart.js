@@ -134,6 +134,24 @@ function plotarDadosMedia(array){
     });
 }
 
-plotarDadosGeneros([30, 40, 10, 2]) // Máx 4
-plotarDadosIdade([10, 10, 0, 10, 20, 40, 50, 50]); // Máx 8
+fetch('/usuarios/genero').then(response => {
+    if(response.ok){
+        response.json().then(r => {
+        let texto = JSON.stringify(r).replaceAll('{"count(genero)":', '').replaceAll('[', '').replaceAll(']', '').replaceAll('}', '');
+        let array = texto.split(',');
+        plotarDadosGeneros(array);
+        });
+    }
+});
+
+fetch('/usuarios/idade').then(response => {
+    if(response.ok){
+        response.json().then(r => {
+            let texto = JSON.stringify(r).replaceAll('[', '').replaceAll(']', '').replaceAll('}', '').replaceAll('{ "total":', '');
+            let array = texto.split(',');
+            plotarDadosIdade(array)
+        })
+    }
+});
+
 plotarDadosMedia([10, 10, 10, 20, 30]); // Máx 5
