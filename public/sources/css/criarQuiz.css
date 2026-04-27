@@ -87,13 +87,147 @@ label {
     color: var(--cor-texto-quiz)
 }
 
-img{
+.img-quiz {
     object-fit: cover;
     display: block;
     width: 100%;
     border-radius: 15px;
 }
 
+.img-pergunta {
+    width: clamp(400px, 80%, 1200px);
+    border-radius: 15px;
+    object-fit: cover;
+    object-position: top;
+    align-self: center;
+}
+
 .sumir{
+    display: none !important;
+}
+
+.erro {
+    margin-top: 15px;
+    background: rgba(245, 113, 113, 0.5);
+    border: 2px solid rgba(245, 113, 113, 0.5);
+    border-radius: 5px;
+    color: var(--preto);
+    font-size: medium;
+}
+
+.perguntas{
+    width: clamp(400px, 60dvw, 1200px);
+    min-height: clamp(600px, 60vh, 900px);
+    height: fit-content;
+    background-color: var(--preto-fosco);
+    color: var(--cor-texto);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ipt-pergunta{
+    align-self: center;
+    width: 80%;
+    margin: 10px;
+    background-color: var(--preto-fosco);
+    border: 1px solid var(--cor-texto);
+    color: var(--cor-texto);
+    font-size: xx-large;
+    font-weight: 1000;
+    margin-bottom: 15px;
+}
+
+.voltar {
+    margin-right: auto;
+}
+
+.passar {
+    margin-left: auto;
+    gap: 25px;
+}
+
+.navegacao{
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+button {
+    padding: 8px 3px;
+    border: 2px solid var(--cor-texto);
+    border-radius: 15px;
+    color: var(--preto-fosco);
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+button:hover {
+    scale: 1.1;
+}
+
+img{
+    user-select: none;
+}
+
+.ipt-opcao{
+    text-align: start;
+    margin: 10px;
+    background-color: var(--preto-fosco);
+    border: 1px solid var(--cor-texto);
+    color: var(--cor-texto);
+    width: 90%;
+    align-self: flex-start;
+}
+
+.opcoes{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.opcao{
+    display: flex;
+    gap: 13px;
+    width: 100%;
+}
+
+input[type="checkbox"]{
     display: none;
+}
+
+.check {
+    align-self: center;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--cor-texto);
+    border-radius: 15px;
+    display: inline-block;
+    transition: all .2s ease;
+}
+
+.opcao input[type="checkbox"]:checked+.check {
+    background-color: var(--cor-texto);
+    border-color: var(--cor-texto);
+}
+
+.btn{
+    width: 90%;
+    align-self: center;
+    margin: 20px;
+}
+.btn:hover{
+    scale: 1.05;
+}
+
+.info{
+    font-size: x-large;
+    color: red;
+}
+
+.svg{
+    fill: red;
+    cursor: pointer;
+    align-self: center;
 }

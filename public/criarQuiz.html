@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="view-transition" content="same-origin">
     <title>Vou Pensar</title>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close" />
     <link rel="stylesheet" href="./sources/css/all.css" />
     <link rel="stylesheet" href="./sources/css/criarQuiz.css" />
     <link rel="icon" href="" />
@@ -16,13 +17,14 @@
   <body onload="carregarElementos('criarQuiz'), montagemQuiz(5)">
     <header></header>
     <main>
-        <div class="container">
-          <div id="criar-quiz" class="show">
+        <div class="container"> <!--CONTAINER GERAL, ENVOLVE TODA A PÁGINA-->
+          <div id="criar-quiz" class="show"> <!--CRIAR O QUIZ-->
             <h1>Monte seu quiz! Insira as informações abaixo</h1>
             <label>Imagem do Quiz</label>
             <input type="text" id="quiz-img" placeholder="Imagem do quiz" oninput="montagemQuiz(4)">
             <label>Título do Quiz</label>
             <input type="text" id="quiz-titulo" placeholder="Título do quiz" oninput="montagemQuiz(1)">
+            <div id="quiz-erro-titulo" class="erro sumir">Título menor que 7 caracteres</div>
             <label>Gênero do Quiz</label>
             <select id="quiz-genero" onchange="montagemQuiz(2)">
               <option hidden selected disabled>Selecione alguma opção!</option>
@@ -43,7 +45,7 @@
             </select>
             <h1>Acompanhe as modificações</h1>
               <div class="quiz">
-                <img id="img-quiz-template">
+                <img id="img-quiz-template" class="img-quiz">
                 <div class="geral">
                 <h1 id="titulo-quiz-template">Insira o título</h1>
                 <div class="content" id="genero-quiz-template">Insira o gênero</div>
@@ -53,16 +55,73 @@
                 <div class="content" id="nome-quiz-template"></div>
               </div> 
             </div>
-            <button onclick="prosseguirPerguntas('i')" class="btn-importante">Criar perguntas!</button>
+            <div id="quiz-erro" class="erro sumir"></div>
+            <button onclick="menuPerguntas('i')" class="btn-importante">Criar perguntas!</button>
+          </div> <!-- FIM DA DIV CRIAR QUIZ -->
 
-          </div>
+
+
           <div id="criar-perguntas" class="show sumir">
             <h1>Comece sua pergunta!</h1>
-            <button onclick="prosseguirPerguntas('v')" class="btn-importante" style="margin-top: 0;">Voltar</button>
+            <button onclick="menuPerguntas('v')" class="btn-importante" style="margin-top: 0;">Voltar</button>
             <label>Imagem da Pergunta</label>
-            <input type="text" id="pergunta-img" placeholder="Imagem da Pergunta" oninput="montagemPergunta()">
-          </div>
-        </div>
+            <input type="text" id="pergunta-img" style="margin-bottom: 15px;" oninput="montagemPergunta()">
+            <span class="info">Assinale as opções corretas clicando no lado esquerdo</span>
+            <div class="perguntas">
+              <input type="text" oninput="formatarTitulo()" id="titulo-pergunta" class="ipt-pergunta" placeholder="Título">
+              <img id="img-pergunta-template" class="img-pergunta">
+              <div class="opcoes">
+
+                  <label class="opcao">
+                  <input type="checkbox">
+                  <span class="check"></span>
+                  <input type="text" class="ipt-opcao">
+                  </label>
+
+                  <label class="opcao">
+                  <input type="checkbox">
+                  <span class="check"></span>
+                  <input type="text" class="ipt-opcao">
+                  </label>
+
+                  <label class="opcao">
+                  <input type="checkbox">
+                  <span class="check"></span>
+                  <input type="text" class="ipt-opcao">
+                  </label>
+
+                  <label class="sumir opcao" id="label-1">
+                  <input type="checkbox">
+                  <span class="check"></span>
+                  <input type="text" class="ipt-opcao">
+                  <span onclick="retirarOpcao('label-1')" class="material-symbols-outlined svg"> close </span>
+                  </label>
+
+                  <label class="sumir opcao" id="label-2">
+                  <input type="checkbox">
+                  <span class="check"></span>
+                  <input type="text" class="ipt-opcao">
+                  <span onclick="retirarOpcao('label-2')" class="material-symbols-outlined svg"> close </span>
+                  </label>
+
+                  <label class="sumir opcao" id="label-3">
+                  <input type="checkbox">
+                  <span class="check"></span>
+                  <input type="text" class="ipt-opcao">
+                  <span onclick="retirarOpcao('label-3')" class="material-symbols-outlined svg"> close </span>
+                  </label>
+
+                  </div>
+                  <button onclick="adicionarOpcao()" class="btn">Adicionar mais uma opção!</button>
+                  <div class="navegacao">
+                </div> <!--FIM DA DIV NAVEGAÇÃO-->
+              </div> <!--FIM DA DIV PERGUNTAS-->
+              <div id="erro-passar" class="erro sumir"></div>
+            </div> <!--FIM DA DIV CRIAR PERGUNTAS-->
+
+
+
+        </div> <!--FIM CONTAINER GERAL-->
     </main>
     <footer></footer>
 </body>

@@ -104,7 +104,8 @@ main {
 }
 
 main .container {
-    width: 40%;
+    width: fit-content;
+    min-width: 40%;
     border: 2px solid var(--preto);
     border-radius: 20px;
     padding: 40px;

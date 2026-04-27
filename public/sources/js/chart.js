@@ -149,6 +149,7 @@ fetch('/usuarios/idade').then(response => {
         response.json().then(r => {
             let texto = JSON.stringify(r).replaceAll('[', '').replaceAll(']', '').replaceAll('}', '').replaceAll('{ "total":', '');
             let array = texto.split(',');
+            console.log(array);
             plotarDadosIdade(array)
         })
     }
