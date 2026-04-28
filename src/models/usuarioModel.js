@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function autenticar(email, senha) {
     let query = `
-        SELECT id, nome, email, genero, timestampdiff(YEAR, dtNascimento, curdate()) as idade, senha, tipo FROM usuario WHERE email = ? AND senha = ?;
+        SELECT idUsuario, nome, email, identidade, timestampdiff(YEAR, dtNascimento, curdate()) as idade, senha, cargo FROM usuario WHERE email = ? AND senha = ?;
     `;
     console.log("Executando a instrução SQL: \n" + query);
     return database.executar(query, [email, senha]);
@@ -14,14 +14,14 @@ function cadastrar(nome, email, genero, dtNascimento, senha) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     let query = `
-        INSERT INTO usuario (nome, email, genero, dtNascimento, senha, tipo) VALUES (?, ?, ?, ?, ?, 'p');
+        INSERT INTO usuario (nome, email, identidade, dtNascimento, senha, cargo) VALUES (?, ?, ?, ?, ?, 'p');
     `;
     console.log("Executando a instrução SQL: \n" + query);
     return database.executar(query, [nome, email, genero, dtNascimento, senha]);
 }
 
 function contarGenero(){
-    let query = `select count(genero) from usuario group by genero`;
+    let query = `select count(identidade) from usuario group by identidade`;
     return database.executar(query);
 }
 

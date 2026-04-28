@@ -15,6 +15,8 @@ quizes_concluidos int,
 tipo char(1) not null
 );
 
+select * from quiz;
+
 insert into usuario values (default, 'Tawan Lander', 'tlander2007@gmail.com', 'Masculino', '2007-04-02', 'SenhaFortona12#', 0, 'a');
 insert into usuario values (default, 'Tawan Lander', 'sim@sim.com', 'Feminino', '2007-04-02', 'SenhaFortona15#', 0, 'a');
 insert into usuario values (default, 'Tawan Lander', 'teste@teste.com', 'Prefiro Não Dizer', '2007-04-02', 'SenhaFortona14#', 0, 'a');
@@ -24,7 +26,8 @@ select * from usuario;
 
 create table quiz(
 id int primary key auto_increment,
-nome varchar(60) not null,
+titulo varchar(60) not null,
+genero varchar(30) not null,
 tipo varchar(30) not null,
 img varchar(500),
 avaliacao float,
@@ -32,7 +35,11 @@ fkUsuario int,
 constraint fkUsuario_quiz foreign key (fkUsuario) references usuario(id)
 );
 
-alter table quiz modify column img varchar(500);
+describe quiz;
+
+alter table quiz add column genero varchar(30);
+
+alter table perguntas add column tipo char(1);
 
 insert into quiz (nome, tipo) values 
 ('O Quão bem você conhece Jujutsu Kaisen', 'Perguntas e Respostas');
@@ -53,9 +60,12 @@ id int,
 fkQuiz int,
 constraint pkDupla_perguntas primary key (id, fkQuiz),
 constraint fkQuiz_perguntas foreign key (fkQuiz) references quiz(id),
-nome varchar(60) not null,
-img varchar(100)
+titulo varchar(60) not null,
+imagem varchar(500) not null,
+tipo char(1) not null
 );
+
+alter table perguntas modify column titulo varchar(60);
 
 insert into perguntas (id, fkQuiz, nome) values
 (1, 3, 'Você Gosta de Preto?'),

@@ -7,7 +7,7 @@ function cadastrar() {
         body: JSON.stringify({
             nomeServer: nome.value,
             emailServer: email.value,
-            generoServer: genero.value,
+            identidadeServer: genero.value,
             dtNascimentoServer: idade.value,
             senhaServer: senha.value
         }),
@@ -19,8 +19,8 @@ function cadastrar() {
                 setTimeout(() => {
                     window.location = "./login.html";
                 }, "2000");
-                removeClass(confirmacao, 'sumir')
-                addClass(confirmacao, 'animacao')
+                confirmacao.classList.remove('sumir')
+                confirmacao.classList.add('animacao')
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
             }
@@ -51,10 +51,10 @@ function login() {
                     email: json.email,
                     nome: json.nome,
                     idade: json.idade,
-                    genero: json.genero,
+                    identidade: json.identidade,
                     senha: json.senha,
-                    tipo: json.tipo
-                }))
+                    cargo: json.tipo
+                }));
                 setTimeout(function () {
                     window.location = "./index.html";
                 }, 1000);

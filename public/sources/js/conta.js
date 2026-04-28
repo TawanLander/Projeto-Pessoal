@@ -13,7 +13,7 @@ function verificandoSessao() {
         window.location = './index.html'
     } else {
         BDnome.textContent = sessao.nome;
-        BDgenero.textContent = sessao.genero;
+        BDgenero.textContent = sessao.identidade;
         BDidade.textContent = sessao.idade;
         BDemail.textContent = sessao.email;
         BDsenha.textContent = sessao.senha;

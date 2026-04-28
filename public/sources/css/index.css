@@ -41,13 +41,6 @@
     color: var(--cor-texto-quiz)
 }
 
-.bg-img {
-    background-image: url(https://imgs.search.brave.com/Ot5Z2KERv-HQ8c-ib5zHx2hcogjDPxhsEO8qUDLLSP8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93MC5w/ZWFrcHguY29tL3dh/bGxwYXBlci8xODAv/OTYyL0hELXdhbGxw/YXBlci1hbmltZS1q/dWp1dHN1LWthaXNl/bi1zdWt1bmEtanVq/dXRzdS1rYWlzZW4t/dGh1bWJuYWlsLmpw/Zw);
-    color: white;
-    background-size: 100% 100%;
-    background-position: center center;
-}
-
 .carroussel {
     margin: 100px auto;
     width: 97%;
@@ -95,5 +88,7 @@
 
 img{
     width: 100%;
+    height: 275px;
     border-radius: 8px;
+    object-fit: cover;
 }

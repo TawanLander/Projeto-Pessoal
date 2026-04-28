@@ -18,10 +18,10 @@ function autenticar(req, res) {
                             id: resultadoAutenticar[0].id,
                             email: resultadoAutenticar[0].email,
                             nome: resultadoAutenticar[0].nome,
-                            genero: resultadoAutenticar[0].genero,
+                            identidade: resultadoAutenticar[0].identidade,
                             idade: resultadoAutenticar[0].idade,
                             senha: resultadoAutenticar[0].senha,
-                            tipo: resultadoAutenticar[0].tipo
+                            cargo: resultadoAutenticar[0].cargo
                         });
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");

@@ -92,6 +92,7 @@ label {
     display: block;
     width: 100%;
     border-radius: 15px;
+    height: 275px;
 }
 
 .img-pergunta {
@@ -100,6 +101,7 @@ label {
     object-fit: cover;
     object-position: top;
     align-self: center;
+    margin-bottom: 10px;
 }
 
 .sumir{
@@ -167,10 +169,6 @@ button:hover {
     scale: 1.1;
 }
 
-img{
-    user-select: none;
-}
-
 .ipt-opcao{
     text-align: start;
     margin: 10px;
@@ -182,6 +180,7 @@ img{
 }
 
 .opcoes{
+    border-top: 2px solid var(--cor-texto);
     display: flex;
     flex-direction: column;
     gap: 10px;

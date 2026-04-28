@@ -1,7 +1,12 @@
 var bd = require('../database/config');
 
+function listarInformacoes(){
+    let query = 'select max(idQuiz) + 1 from quiz'
+    return bd.executar(query);
+}
+
 function listarQuizes(){
-    let query = 'select * from quiz order by avaliacao';
+    let query = 'select quiz.*, usuario.nome from quiz left join usuario on usuario.idUsuario = quiz.fkUsuario order by quiz.avaliacao';
     return bd.executar(query);
 }
 
@@ -15,16 +20,31 @@ function listarOpcoes(fk){
     return bd.executar(query, [fk]);
 }
 
-function cadastrar(nome){
-    let query = `ìnsert into quizes values (?)`;
+function cadastrarQuiz(id, titulo, imagem, genero, tipo, fkUsuario){
+    let query = `insert into quiz (id, titulo, imagem, genero, tipo, fkUsuario) values (?, ?, ?, ?, ?, ?)`;
 
-    return bd.executar(query, [nome]);
+    return bd.executar(query, [id, titulo, imagem, genero, tipo, fkUsuario]);
 };
+
+function cadastrarPerguntas(id, titulo, imagem, tipo, fkQuiz){
+    let query = `insert into perguntas (id, titulo, imagem, tipo, fkQuiz) values (?, ?, ?, ?, ?)`;
+
+    return bd.executar(query, [id, titulo, imagem, tipo, fkQuiz]);
+}
+
+function cadastrarOpcoes(){
+    let query = ``;
+
+    return bd.executar(query, []);
+}
 
 
 module.exports = {
+    listarInformacoes,
     listarQuizes,
     listarPerguntas,
     listarOpcoes,
-    cadastrar
+    cadastrarQuiz,
+    cadastrarPerguntas,
+    cadastrarOpcoes
 };

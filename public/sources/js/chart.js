@@ -137,7 +137,7 @@ function plotarDadosMedia(array){
 fetch('/usuarios/genero').then(response => {
     if(response.ok){
         response.json().then(r => {
-        let texto = JSON.stringify(r).replaceAll('{"count(genero)":', '').replaceAll('[', '').replaceAll(']', '').replaceAll('}', '');
+        let texto = JSON.stringify(r).replaceAll('{"count(identidade)":', '').replaceAll('[', '').replaceAll(']', '').replaceAll('}', '');
         let array = texto.split(',');
         plotarDadosGeneros(array);
         });

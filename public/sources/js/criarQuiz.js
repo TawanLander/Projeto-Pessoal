@@ -56,10 +56,6 @@ function criarQuiz() {
 }
 
 function menuPerguntas(o) {
-    // document.getElementById('criar-quiz').classList.add('sumir');
-    // document.getElementById('criar-perguntas').classList.remove('sumir');
-    // return adicionarPergunta()
-
 
     erroQuiz.innerHTML = '';
     // VENDO SE TEM POSSÍVEIS ERROS NO TEMPLATE DO QUIZ ANTES DE PROSSEGUIR
@@ -94,6 +90,7 @@ function adicionarMarcadores() {
         navegacao.innerHTML = `
             <div class="passar">
             <button onclick="salvarPergunta()">Próxima Pergunta</button>
+            <button onclick="terminarQuiz()">Terminar Quiz</button>
             </div>
             `
     } else if (tamanho <= 4) { // MAX DE PERGUNTAS: 25
@@ -108,14 +105,14 @@ function adicionarMarcadores() {
             <button>Voltar Pergunta</button>
             <div class="passar">
             <button onclick="salvarPergunta()">Próxima Pergunta</button>
-            <button>Terminar Quiz</button>
+            <button onclick="terminarQuiz()">Terminar Quiz</button>
             </div>
             `
     } else {
         navegacao.innerHTML = `
             <button>Voltar Pergunta</button>
             <div class="passar">
-            <button>Terminar Quiz</button>
+            <button onclick="terminarQuiz()">Terminar Quiz</button>
             </div>
             `
     }
@@ -193,31 +190,38 @@ function salvarPergunta() {
         erro.classList.add('sumir');
 
         let json = {};
+
+        if(verdadeiros > 1){
+            json.tipo = 'm'
+        } else {
+            json.tipo = 'n'
+        };
         let formatar = pergunta.value.substring(0, 1).toUpperCase() + pergunta.value.substring(1);
 
         json.titulo = formatar;
         json.imagem = imagem.value
+        json.opcoes = [
+            { id: 0, verdadeiro: checkbox[0].checked },
+            { id: 1, verdadeiro: checkbox[1].checked },
+            { id: 2, verdadeiro: checkbox[2].checked }
+        ];
 
-        json.opcao0 = [opcao[0].value, checkbox[0].checked];
-
-        json.opcao1 = [opcao[1].value, checkbox[1].checked];
-
-        json.opcao2 = [opcao[2].value, checkbox[2].checked];
 
         if (!label1.classList.contains('sumir')) {
-            json.opcao3 = [opcao[3].value, checkbox[3].checked];
+            json.opcoes.push({ id: 3, verdadeiro: checkbox[3].checked });
         }
 
         if (!label2.classList.contains('sumir')) {
-            json.opcao4 = [opcao[4].value, checkbox[4].checked];
+            json.opcoes.push({ id: 4, verdadeiro: checkbox[4].checked });
         }
 
         if (!label3.classList.contains('sumir')) {
-            json.opcao5 = [opcao[5].value, checkbox[5].checked];
+            json.opcoes.push({ id: 5, verdadeiro: checkbox[5].checked });
         }
 
         // CONFIGURANDO TUDO PARA A PRÓXIMA PERGUNTA
         perguntasArray.push(json);
+        console.log(json);
         pergunta.value = '';
         imagem.value = '';
         document.getElementById('img-pergunta-template').src = '';
@@ -239,5 +243,71 @@ function formatarTitulo() {
     let formatar = pergunta.value.substring(0, 1).toUpperCase() + pergunta.value.substring(1);
 
     pergunta.value = formatar;
+
+}
+
+function terminarQuiz() {
+    salvarPergunta();
+    fetch('/quizes/informacao').then(resultado => {
+        if (resultado.ok) {
+            resultado.json().then(i => {
+                var id = JSON.stringify(i).replaceAll(`{"max(idQuiz) + 1":`, '').replaceAll('[', '').replaceAll(']', '').replaceAll('}', '');
+
+                // CADASTRANDO O QUIZ NO BANCO DE DADOS
+                fetch('/quizes/cadastrar/quiz', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: Number(id),
+                        titulo: tituloQuiz.value,
+                        imagem: imgQuiz.value,
+                        genero: generoQuiz.value,
+                        tipo: tipoQuiz.value,
+                        fkUsuario: JSON.parse(sessionStorage.getItem('usuario')).id
+                    })
+                }).then(res => { // * PARÂMETRO DE VERIFICAÇÃO SE A RESPOSTA NÃO FOR OK
+                    if(!res.ok){
+                        throw new Error(`Erro ao criar quiz: ${res.status}`)
+                        return
+                    }
+                }).then(() => { // DEPOIS DE INSIRA O QUIZ NO BANCO DE DADOS VAI INSERIR CADA PERGUNTA
+                    for(let i = 0; i < perguntasArray.length; ++i){
+                        let titulo = perguntasArray[i].titulo;
+                        let imagem = perguntasArray[i].imagem;
+                        let tipo = perguntasArray[i].tipo;
+
+                        fetch('/quizes/cadastrar/perguntas', {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            id: i + 1, // ! SEMPRE SOMARÁ O I DO FOR COM 1 PARA O ID, MESMA LÓGICA SERÁ USADA DA FKPERGUNTAS DAS OPÇÕES
+                            titulo: titulo,
+                            imagem: imagem,
+                            tipo: tipo,
+                            fkQuiz: Number(id)
+                        })
+                    }).then(res => { // * PARÂMETRO DE VERIFICAÇÃO SE A RESPOSTA NÃO FOR OK
+                        if(!res.ok){
+                            throw new Error(`Erro ao criar pergunta ${res.status}`)
+                            return
+                        }
+                    }).then(() => { // DEPOIS DE INSERIR A PERGUNTA NO BANCO IRÁ INSERIR AS OPÇÕES (ESSE FOR ESTÁ DENTRO DO OUTRO FOR)
+                        for(let e = 0; e < perguntasArray[i].opcoes.length; ++e){
+
+                        }
+                    }).catch(e => { // PEGANDO O ERRO DO FETCH DO CADASTRAR OPÇÕES
+                        console.error(e.message);
+                    })
+                    }
+                }).catch(e => { // PEGANDO O ERRO DO FETCH CADASTRAR PERGUNTAS
+                    console.error(e.message);
+                })
+            })
+        }
+    })
 
 }
