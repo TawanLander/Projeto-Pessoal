@@ -4,6 +4,9 @@ use site;
 show tables;
 select count(genero) from usuario group by genero;
 
+
+show columns from quiz;
+
 create table usuario(
 id int primary key auto_increment,
 nome varchar(60) not null,

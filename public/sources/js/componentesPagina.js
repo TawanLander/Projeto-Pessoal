@@ -29,8 +29,8 @@ function carregarElementos(janela){
       <div class="container" id="container-header">
         <!--Parte do INÍCIO-->
         <a id="index" class="a-resto" href="./index.html">Início</a>
-          <!--Parte SOBRE NÓS-->
-        <a id="sobre" class="a-resto" href="./sobre.html">Sobre Nós</a>
+          <!--Parte SOBRE MIM-->
+        <a id="sobre" class="a-resto" href="./sobre.html">Sobre Mim</a>
           <!--Parte de LOGIN ou da CONTA-->` 
 
     if(verificarSessao()){

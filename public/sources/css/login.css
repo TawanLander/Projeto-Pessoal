@@ -99,3 +99,8 @@ input:focus {
         transform: scale(1);
     }
 }
+
+main a {
+    text-decoration: none;
+    color: var(--atencao)
+}

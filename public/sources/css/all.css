@@ -16,13 +16,14 @@
 
 :root {
     --cor-texto-quiz: rgb(255, 255, 255, .9);
-    --preto: black;
+    --preto: #010013;
     --destaque: rgb(76, 76, 255);
-    --cor-texto: #fff;
+    --cor-texto: #FAF9F6;
     --box-shadow: rgba(0, 0, 0, .35);
     --bgc: whitesmoke;
     --cinza: lightgray;
     --preto-fosco: #1a1a1a;
+    --atencao: rgb(46, 84, 109);
 }
 
 ::-webkit-scrollbar {
@@ -117,13 +118,8 @@ main .container {
     flex-direction: column;
 }
 
-main a {
-    text-decoration: none;
-    color: var(--preto)
-}
-
 footer {
-    background-color: var(--preto-fosco);
+    background-color: var(--preto);
     color: var(--cor-texto);
     width: 100%;
     height: min(30px, auto);

@@ -53,19 +53,18 @@ function plotarPerguntas(perguntas, opcoes) {
 
         }
         msg += `
-          <h3>${perguntas[i].nome}</h3>
-          <div><img src="${perguntas[i].img}"></div>
+          <h3>${perguntas[i].titulo}</h3>
+          <div><img src="${perguntas[i].imagem}"></div>
             </div>
         <div class="opcoes">`
-
         for (let e = 0; e < filter.length; ++e) {
             let opcao = filter[e];
             // RADIO BUTTON - SÓ PODE TER UMA OPÇÃO ESCOLHIDA DE CADA VEZ! O NOME É O LET "I", RADIOS COM MESMO NOME NÃO PODEM SER SELECIONADOS AO MESMO TEMPO.
             msg += `
             <label class="opcao"> 
-            <input type="radio" name="${i}">
+            <input type="radio" name="${i}" id="${opcao.tipo}">
             <span class="check"></span>
-            ${opcao.nome}
+            ${opcao.titulo}
           </label>`
         }
         msg += `</div><div class="guias">`

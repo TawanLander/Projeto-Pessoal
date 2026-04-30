@@ -1,12 +1,17 @@
 var bd = require('../database/config');
 
 function listarInformacoes(){
-    let query = 'select max(idQuiz) + 1 from quiz'
+    let query = 'select max(idQuiz) + 1  as id from quiz'
     return bd.executar(query);
 }
 
 function listarQuizes(){
-    let query = 'select quiz.*, usuario.nome from quiz left join usuario on usuario.idUsuario = quiz.fkUsuario order by quiz.avaliacao';
+    let query = `select quiz.*, usuario.nome, count(perguntas.id) as qtd
+    from quiz 
+    left join usuario on usuario.idUsuario = quiz.fkUsuario 
+    join perguntas on perguntas.fkQuiz = quiz.idQuiz
+    group by quiz.idQuiz
+    order by quiz.avaliacao`;
     return bd.executar(query);
 }
 
@@ -21,7 +26,7 @@ function listarOpcoes(fk){
 }
 
 function cadastrarQuiz(id, titulo, imagem, genero, tipo, fkUsuario){
-    let query = `insert into quiz (id, titulo, imagem, genero, tipo, fkUsuario) values (?, ?, ?, ?, ?, ?)`;
+    let query = `insert into quiz (idQuiz, titulo, imagem, genero, tipo, fkUsuario) values (?, ?, ?, ?, ?, ?)`;
 
     return bd.executar(query, [id, titulo, imagem, genero, tipo, fkUsuario]);
 };
@@ -32,10 +37,10 @@ function cadastrarPerguntas(id, titulo, imagem, tipo, fkQuiz){
     return bd.executar(query, [id, titulo, imagem, tipo, fkQuiz]);
 }
 
-function cadastrarOpcoes(){
-    let query = ``;
+function cadastrarOpcoes(id, fkPerguntas, fkQuiz, titulo, verdadeiro){
+    let query = `insert into opcoes (id, fkPerguntas, fkQuiz, titulo, tipo) values (?, ?, ?, ?, ?)`;
 
-    return bd.executar(query, []);
+    return bd.executar(query, [id, fkPerguntas, fkQuiz, titulo, verdadeiro]);
 }
 
 

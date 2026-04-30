@@ -1,22 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="view-transition" content="same-origin">
+    <meta name="view-transition" content="same-origin" />
     <title>Vou Pensar</title>
     <link rel="stylesheet" href="./sources/css/all.css" />
+    <link rel="stylesheet" href="./sources/css/sobre.css" />
     <link rel="icon" href="" />
     <script src="./sources/js/componentesPagina.js" defer></script>
-</head>
-<body onload="carregarElementos('sobre')">
+  </head>
+  <body onload="carregarElementos('sobre')">
     <header></header>
     <main>
-        <h1>Quem eu sou?</h1>
-        Olá me chamo Tawan, tenho 19 anos, atualmente cursando Analise e Desenvolvimento de Sistemas na SPTech. Este site começou com um intuito acadêmico, mas me encantei pelo projeto no percurso, não só pela parte lógica, mas por conseguir ver tudo começando a funcionar desde o principio até os seus retoques finais.
-        <h1>Porque escolhi esse tema</h1>
-        Desde pequeno, sempre estive incluido na cultura Geek, cresci em casa com meu tio jogando diversos jogos e eu jogava com ele também, desde então, não me recordo um dia se quer que não estive envolvido com alguma coisa de jogo, séries, anime, filmes, ou qualquer outra forma de mídia deste tipo. Então na hora que tivemos que escolher os temas, o primeiro tema que me veio a mente foi esse, mas sem a parte do quiz, ela veio depois de uma leve amadurecida na minha cabeça de como eu poderia tranformar minha ideia em realidade. Gostaria de não só criar um lugar onde todos pudessem compartilhar suas experiências e gostos.
+      <section class="sidebar">
+        <h2>Navegue pelos pontos abaixo</h2>
+        <a href="#sobre-mim">Sobre mim</a>
+        <a href="#tema">Tema</a>
+      </section>
+
+      <section class="sessao" id="sobre-mim">
+        <img src="" class="foto" />
+        <div class="conteudo">
+          <h1>Quem eu sou?</h1>
+          <div>
+            Olá me chamo Tawan, tenho 19 anos, atualmente cursando Analise e
+            Desenvolvimento de Sistemas na SPTech. Este site começou com um
+            intuito acadêmico, mas me encantei pelo projeto no percurso, não só
+            pela parte lógica, mas por conseguir ver tudo começando a funcionar
+            desde o principio até os seus retoques finais.
+          </div>
+        </div>
+      </section>
+      
+      <section class="sessao" id="tema">
+        <div class="conteudo">
+          <h1>Porque escolhi esse tema</h1>
+          Desde pequeno, sempre estive incluido na cultura Geek, cresci em casa
+          com meu tio jogando diversos jogos e eu jogava com ele também, desde
+          então, não me recordo um dia se quer que não estive envolvido com
+          alguma coisa de jogo, séries, anime, filmes, ou qualquer outra forma
+          de mídia deste tipo. Então na hora que tivemos que escolher os temas,
+          o primeiro tema que me veio a mente foi esse, mas sem a parte do quiz,
+          ela veio depois de uma leve amadurecida na minha cabeça de como eu
+          poderia tranformar minha ideia em realidade. Gostaria de não só criar
+          um lugar onde todos pudessem compartilhar suas experiências e gostos.
+        </div>
+      </section>
     </main>
     <footer></footer>
-</body>
+  </body>
 </html>

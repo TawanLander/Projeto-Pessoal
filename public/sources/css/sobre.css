@@ -1,0 +1,86 @@
+main {
+    padding: 0;
+    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 8% 1fr;
+    grid-template-areas: "sidebar sobre" "sidebar tema";
+}
+
+header .container{
+    align-self: center;
+}
+
+h1 {
+    font-size: xx-large;
+    color: var(--atencao);
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+h2{
+    color: var(--atencao);
+    font-weight: 800;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--atencao);
+}
+
+a{
+    color: var(--preto-fosco);
+    outline: none;
+    font-size: large;
+    margin: 6px 0 6px 10px;
+    text-decoration: none;
+    align-self: start;
+    transition: all .5s ease;
+}
+a:hover{
+    scale: 1.1;
+    color: var(--atencao);
+}
+
+.sessao {
+    box-sizing: border-box;
+    align-items: center;
+    width: 99%;
+    border: 2px solid var(--cor-texto);
+    border-radius: 15px;
+    padding: 20px;
+    height: fit-content;
+    box-shadow: 0 3px 7px var(--preto);
+}
+
+section:nth-child(2) {
+    display: flex;
+}
+
+.foto {
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    border: 2px solid var(--atencao);
+    margin-right: 15px;
+}
+
+.conteudo {
+    align-items: start;
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar{
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--bgc);
+    border-right: 2px solid var(--preto);
+}
+
+#sobre-min{
+    grid-area: sobre;
+}
+
+#tema{
+    grid-area: tema;
+}

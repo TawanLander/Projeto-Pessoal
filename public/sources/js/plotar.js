@@ -4,6 +4,7 @@ function obterDados() {
     fetch('/quizes').then(response => {
         if (response.ok) {
             response.json().then(r => {
+                r.reverse();
                 plotarDados(r)
             })
         } else {
@@ -29,7 +30,7 @@ function plotarDados(r) {
     <div class="geral"><h1>${item.titulo}</h1>
     <div class="content">Gênero: ${item.genero}</div>
     <div class="content">Tipo: ${item.tipo}</div>
-    <div class="content">Quantidade de Perguntas: 10</div>
+    <div class="content">Quantidade de Perguntas: ${item.qtd}</div>
     <div class="content">Avaliação: 4.5</div>
     `
 

@@ -19,3 +19,7 @@ function verificandoSessao() {
         BDsenha.textContent = sessao.senha;
     }
 }
+
+function ocultarSenha(){
+    
+}

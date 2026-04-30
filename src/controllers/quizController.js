@@ -51,7 +51,7 @@ function cadastrarQuiz(req, res) {
     } else if (tipo === undefined) {
         return res.status(400).send("Seu tipo está incorreto")
     } else if (fkUsuario === undefined) {
-        return res.status(400).send("Seu nomeUsuario está incorreto")
+        return res.status(400).send("Seu fkUsuario está incorreto")
     }
 
     quiz.cadastrarQuiz(id, titulo, imagem, genero, tipo, fkUsuario).then(() => {
@@ -88,7 +88,29 @@ function cadastrarPerguntas(req, res){
 }
 
 function cadastrarOpcoes(req, res){
+    let id = req.body.id
+    let fkPerguntas = req.body.fkPerguntas;
+    let fkQuiz = req.body.fkQuiz;
+    let titulo = req.body.titulo;
+    let verdadeiro = req.body.verdadeiro;
 
+    if(id === undefined){
+        return res.status(400).send('Seu id está incorreto')
+    } else if(fkPerguntas === undefined){
+        return res.status(400).send('Seu fkPerguntas está incorreto')
+    } else if(fkQuiz === undefined){
+        return res.status(400).send('Seu fkQuiz está incorreto')
+    } else if(titulo === undefined){
+        return res.status(400).send('Seu titulo está incorreto')
+    } else if(verdadeiro === undefined){
+        return res.status(400).send('Seu verdadeiro está incorreto')
+    }
+
+    quiz.cadastrarOpcoes(id, fkPerguntas, fkQuiz, titulo, verdadeiro).then(() => {
+        return res.status(200).send('Opção criada!')
+    }).catch(e => {
+        return res.status(500).json(e.sqlMessage);
+    });
 }
 
 module.exports = {
