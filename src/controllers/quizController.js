@@ -113,6 +113,19 @@ function cadastrarOpcoes(req, res){
     });
 }
 
+function deletar(req, res){
+    let id = req.body.id;
+
+    if(id === undefined){
+        return res.status(400).send('Seu id está incorreto')
+    }
+
+    quiz.deletar(id).then(() => {
+        return res.status(200).send('Quiz Deletado!')
+    }).catch(e => {
+        return res.status(500).json(e.sqlMessage);
+    })
+}
 module.exports = {
     listarInformacoes,
     listarQuizes,
@@ -120,5 +133,6 @@ module.exports = {
     listarOpcoes,
     cadastrarQuiz,
     cadastrarPerguntas,
-    cadastrarOpcoes
+    cadastrarOpcoes,
+    deletar
 };

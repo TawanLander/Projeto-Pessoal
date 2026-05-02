@@ -11,7 +11,7 @@ function listarQuizes(){
     left join usuario on usuario.idUsuario = quiz.fkUsuario 
     join perguntas on perguntas.fkQuiz = quiz.idQuiz
     group by quiz.idQuiz
-    order by quiz.avaliacao`;
+    order by quiz.gostados`;
     return bd.executar(query);
 }
 
@@ -43,6 +43,21 @@ function cadastrarOpcoes(id, fkPerguntas, fkQuiz, titulo, verdadeiro){
     return bd.executar(query, [id, fkPerguntas, fkQuiz, titulo, verdadeiro]);
 }
 
+async function deletar(id){
+    let queryOpcoes = `delete from opcoes where fkPerguntas in (select id from perguntas where fkQuiz = ?)`
+    let queryPerguntas = `delete from perguntas where fkQuiz = ?`
+    let queryQuiz = `delete from quiz where idQuiz = ?`
+
+    try {
+        await bd.executar(queryOpcoes, [id]);
+        await bd.executar(queryPerguntas, [id]);
+        return await bd.executar(queryQuiz, [id]);
+
+    } catch(e) {
+        console.log(e)
+        return;
+    }   
+}
 
 module.exports = {
     listarInformacoes,
@@ -51,5 +66,6 @@ module.exports = {
     listarOpcoes,
     cadastrarQuiz,
     cadastrarPerguntas,
-    cadastrarOpcoes
+    cadastrarOpcoes,
+    deletar
 };

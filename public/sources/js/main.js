@@ -5,29 +5,28 @@ function cadastrar() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            nomeServer: nome.value,
-            emailServer: email.value,
-            identidadeServer: genero.value,
-            dtNascimentoServer: idade.value,
-            senhaServer: senha.value
+            nome: nome.value,
+            email: email.value,
+            identidade: genero.value,
+            dtNascimento: idade.value,
+            senha: senha.value
         }),
-    })
-        .then(function (resposta) {
-            console.log("resposta: ", resposta);
+    }).then(resposta => {
+        console.log("resposta: ", resposta);
 
-            if (resposta.ok) {
-                setTimeout(() => {
-                    window.location = "./login.html";
-                }, "2000");
-                confirmacao.classList.remove('sumir')
-                confirmacao.classList.add('animacao')
-            } else {
-                throw "Houve um erro ao tentar realizar o cadastro!";
-            }
-        })
-        .catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
-        });
+        if (resposta.ok) {
+            setTimeout(() => {
+                window.location = "./login.html";
+            }, "2000");
+
+            confirmacao.classList.remove('sumir'); // ! Mostrar ao usuário que foi cadastrado!
+            confirmacao.classList.add('animacao');
+        } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+    }).catch(e => {
+        console.log(`#ERRO: ${e}`);
+    });
     return false;
 }
 
@@ -38,37 +37,28 @@ function login() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            emailServer: email.value,
-            senhaServer: senha.value
+            email: email.value,
+            senha: senha.value
         })
-    }).then(function (resposta) {
+    }).then(resposta => {
         console.log("ESTOU NO THEN DO login()!")
         if (resposta.ok) {
-            console.log(resposta);
-            resposta.json().then(json => {
-                sessionStorage.setItem('usuario', JSON.stringify ({
-                    id: json.id,
-                    email: json.email,
-                    nome: json.nome,
-                    idade: json.idade,
-                    identidade: json.identidade,
-                    senha: json.senha,
-                    cargo: json.tipo
-                }));
+            resposta.json().then(token => {
+                console.log(token);
+                sessionStorage.setItem('token', token.token)
                 setTimeout(function () {
                     window.location = "./index.html";
                 }, 1000);
             });
         } else {
-
             console.log("Houve um erro ao tentar realizar o login!");
 
-            resposta.text().then(texto => {
-                console.error(texto);
+            resposta.text().then(e => {
+                console.error(e);
             });
         }
-    }).catch(function (erro) {
-        console.log(erro);
+    }).catch(e => {
+        console.log(e);
     })
 
     return false;

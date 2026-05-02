@@ -1,8 +1,8 @@
 var usuarioModel = require("../models/usuarioModel");
 
 function autenticar(req, res) {
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
+    let email = req.body.email;
+    let senha = req.body.senha;
 
     if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
@@ -11,42 +11,27 @@ function autenticar(req, res) {
     } else {
 
         usuarioModel.autenticar(email, senha)
-            .then(
-                function (resultadoAutenticar) {
-                    if (resultadoAutenticar.length == 1) {
-                        res.json({
-                            id: resultadoAutenticar[0].idUsuario,
-                            email: resultadoAutenticar[0].email,
-                            nome: resultadoAutenticar[0].nome,
-                            identidade: resultadoAutenticar[0].identidade,
-                            idade: resultadoAutenticar[0].idade,
-                            senha: resultadoAutenticar[0].senha,
-                            cargo: resultadoAutenticar[0].cargo
-                        });
-                    } else if (resultadoAutenticar.length == 0) {
-                        res.status(403).send("Email e/ou senha inválido(s)");
-                    } else {
-                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
-                    }
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+            .then(i => {
+                if(!i) return res.status(400).send('Você não tem cadastro!'); // SE I RETORNAR FALSE ELE RETORNA E DA ERRO
+                res.json({
+                    token: i
+                });
+            }).catch(erro => {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            });
     }
 
 }
 
 function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var nome = req.body.nomeServer;
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
-    var genero = req.body.generoServer;
-    var dtNascimento = req.body.dtNascimentoServer;
+    let nome = req.body.nome;
+    let email = req.body.email;
+    let senha = req.body.senha;
+    let identidade = req.body.identidade;
+    let dtNascimento = req.body.dtNascimento;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -57,31 +42,23 @@ function cadastrar(req, res) {
         res.status(400).send("Sua senha está undefined!");
     } else if (dtNascimento == undefined) {
         res.status(400).send("Sua data de nascimento está undefined!");
-    } else if (genero == undefined) {
-        res.status(400).send("Seu genero está undefined!");
+    } else if (identidade == undefined) {
+        res.status(400).send("Seu identidade está undefined!");
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, genero, dtNascimento, senha)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+        usuarioModel.cadastrar(nome, email, identidade, dtNascimento, senha)
+            .then(resultado => {
+                res.json(resultado);
+            }).catch(erro => {
+                console.log(erro);
+                console.log(`\nHouve um erro ao realizar o cadastro! Erro: ${erro.sqlMessage}`);
+                res.status(500).json(erro.sqlMessage);
+            });
     }
 }
 
-
-function contarGenero(req, res){
+function contarGenero(req, res) {
     usuarioModel.contarGenero(req, res).then(r => {
         res.status(200).json(r);
     }).catch(e => {
@@ -89,7 +66,7 @@ function contarGenero(req, res){
     });
 }
 
-function contarIdade(req, res){
+function contarIdade(req, res) {
     usuarioModel.contarIdade(req, res).then(r => {
         res.status(200).json(r);
     }).catch(e => {

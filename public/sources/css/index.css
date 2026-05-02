@@ -22,6 +22,7 @@
     box-shadow: 0 5px 15px var(--box-shadow);
     background-color: var(--preto-fosco);
     cursor: pointer;
+    position: relative;
 }
 
 .quiz h1 {
@@ -86,9 +87,36 @@
     }
 }
 
-img{
+img {
     width: 100%;
     height: 275px;
     border-radius: 8px;
     object-fit: cover;
+}
+
+.adm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adm button {
+    color: red;
+    font-size: x-large;
+    padding: 10px 15px;
+    background-color: var(--preto);
+}
+
+.deletar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(245, 84, 84, 0.103);
+    border-radius: 10px;
 }

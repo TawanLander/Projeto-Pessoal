@@ -195,6 +195,7 @@ function salvarPergunta() {
         } else {
             json.tipo = 'n'
         };
+        
         let formatar = pergunta.value.substring(0, 1).toUpperCase() + pergunta.value.substring(1);
 
         const iptOpcao = document.querySelectorAll('.ipt-opcao');

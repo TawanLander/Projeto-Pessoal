@@ -1,23 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="view-transition" content="same-origin">
+    <meta name="view-transition" content="same-origin" />
     <title>Vou Pensar</title>
     <link rel="stylesheet" href="./sources/css/all.css" />
-    <link rel="stylesheet" href="./sources/css/quiz.css">
+    <link rel="stylesheet" href="./sources/css/quiz.css" />
     <link rel="icon" href="" />
     <script src="./sources/js/script.js" defer></script>
     <script src="./sources/js/main.js" defer></script>
     <script src="./sources/js/quiz.js" defer></script>
     <script src="./sources/js/componentesPagina.js" defer></script>
-</head>
-<body onload="carregarElementos(), pegarDados()">
+    <script src="./sources/js/sessao.js" defer></script>
+    
+  </head>
+  <body onload="verificarSessao('comum'), carregarElementos(), pegarDados()">
     <header></header>
     <main>
-     <div class="quiz" id="quiz"></div>
+      <div class="quiz" id="quiz"></div>
+
+      <div class="terminar sumir">
+        <h1>Parabéns! Você concluiu o quiz</h1>
+        <div class="texto">Pontuação final: <span id="pontuacao"></span><br>
+        Pontuação máxima: <span id="maxima"></span></div>
+        <div>
+            <button onclick="window.location.href='./quiz.html'">Jogar de Novo</button>
+            <button onclick="window.location.href='./index.html'">Voltar ao Início</button>
+        </div>
+        <button onclick="verDetalhes()">Ver Detalhadamente</button>
+        <div id="detalhes"></div>
+      </div>
     </main>
     <footer></footer>
-</body>
+  </body>
 </html>

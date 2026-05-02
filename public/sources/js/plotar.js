@@ -1,5 +1,3 @@
-const sessao = JSON.parse(sessionStorage.getItem('usuario'));
-
 function obterDados() {
     fetch('/quizes').then(response => {
         if (response.ok) {
@@ -13,14 +11,16 @@ function obterDados() {
     })
 }
 
-function plotarDados(r) {
+async function plotarDados(r) {
+    const sessao = await verificarSessao();
+
     const divQuizes = document.getElementById('div-quizes');
-    
     r.forEach(item => {
-        console.log(item);
+
     let msg = '';
+
     if(sessao){
-        msg += `<div class="quiz" onclick="salvarDados(${item.idQuiz})">`
+        msg += `<div id="${item.idQuiz}" class="quiz" onclick="salvarDados(${item.idQuiz})">`
     } else {
         msg += `<div class="quiz" onclick="window.location='./login.html'">`
     }
@@ -40,8 +40,30 @@ function plotarDados(r) {
      msg += `<div class="content">Feito por: GeeQuiz</div></div>`   
     }
 
-    msg += `</div>`
+    msg += `<div class="deletar" onclick="removerQuiz(${item.idQuiz})"><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#571302"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></div></div>`
 
     divQuizes.innerHTML += msg;
     });
+}
+
+function removerQuiz(id){
+    event.stopPropagation();
+    
+    let div = document.getElementById(id);
+    let imagem = div.querySelector('img');
+    let titulo = div.querySelector('h1');
+    let infos = div.querySelectorAll('.content');
+
+    sessionStorage.setItem('quizModel', JSON.stringify({
+        id: id,
+        titulo: titulo.textContent,
+        imagem: imagem.src,
+        genero: infos[0].textContent,
+        tipo: infos[1].textContent,
+        qtdPerguntas: infos[2].textContent,
+        gostados: infos[3].textContent,
+        feitoPor: infos[4].textContent
+    }))
+
+    window.location.href = './remover.html'
 }

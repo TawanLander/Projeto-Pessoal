@@ -134,13 +134,21 @@ function plotarDadosMedia(array){
     });
 }
 
-fetch('/usuarios/genero').then(response => {
+fetch('/usuarios/genero', {
+    headers: {
+        'token': sessionStorage.getItem('token')
+    }
+}).then(response => {
     if(response.ok){
         response.json().then(r => {
         let texto = JSON.stringify(r).replaceAll('{"count(identidade)":', '').replaceAll('[', '').replaceAll(']', '').replaceAll('}', '');
         let array = texto.split(',');
         plotarDadosGeneros(array);
         });
+    } else {
+        response.text().then(msg => {
+            
+        })
     }
 });
 

@@ -1,0 +1,119 @@
+.remover {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 30%;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.remover h1 {
+    margin-bottom: 20px;
+    font-weight: 800;
+    font-size: xx-large;
+    color: var(--preto)
+}
+
+.quiz {
+    width: calc(25% - 25px);
+    min-width: 400px;
+    min-height: 600px;
+    height: auto;
+    border-radius: 15px;
+    border: 2px solid var(--preto);
+    align-items: start;
+    justify-content: start;
+    text-align: start;
+    box-shadow: 0 5px 15px var(--box-shadow);
+    background-color: var(--preto-fosco);
+    position: relative;
+}
+
+.quiz h1 {
+    font-weight: 550;
+    font-size: xx-large;
+    color: var(--cor-texto-quiz)
+}
+
+.content {
+    font-weight: 550;
+    font-size: x-large;
+    color: var(--cor-texto-quiz)
+}
+
+img{
+    width: 100%;
+    height: 275px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.botoes{
+    margin: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.sim, .nao{
+    border: 2px solid var(--preto);
+    border-radius: 15px;
+    margin: 0 15px;
+    transition: all .6s ease;
+    cursor: pointer;
+}
+
+.sim:hover, .nao:hover{
+    scale: 1.1;
+}
+
+.sim{
+    padding: 10px 15px;
+    background-color: red;
+    color: var(--cor-texto);
+}
+
+.nao{
+    padding: 16px 24px;
+    background-color: rgb(66, 241, 90);
+    color: var(--preto);
+}
+
+.confirmacao{
+    position: absolute !important;
+    display: flex;
+    width: 30%;
+    height: 30%;
+    top: 50%;
+    left: 50%;
+    background-color: var(--bgc);
+    border: 2px solid var(--preto);
+    border-radius: 15px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    animation: fadeIn 1s forwards;
+}
+
+.confirmacao h1 {
+    font-size: xx-large;
+    font-weight: 800;
+}
+
+.sumir {
+    display: none !important;
+    transition: all .5s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0.85;    
+        transform: translate(-50%, -50%) translateY(20px);
+    }
+    to{
+        opacity: 1;
+        transform: translate(-50%, -50%) translateY(0);
+    }
+}

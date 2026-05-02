@@ -1,15 +1,6 @@
-function verificarSessao(){
-    const sessao = JSON.parse(sessionStorage.getItem('usuario'));
-    const div = document.getElementById('container-header');
+async function carregarElementos(janela){
+    const sessao = await verificarSessao();
 
-    if(sessao) {
-        return true
-    } else {
-        return false
-    }
-}
-
-function carregarElementos(janela){
     const header = document.querySelector('header');
     const footer = document.querySelector('footer');
     let headerMsg = '';
@@ -33,7 +24,7 @@ function carregarElementos(janela){
         <a id="sobre" class="a-resto" href="./sobre.html">Sobre Mim</a>
           <!--Parte de LOGIN ou da CONTA-->` 
 
-    if(verificarSessao()){
+    if(sessao){
         headerMsg += `<a id="criarQuiz" href="./criarQuiz.html" class="a-resto">Criar Seu Quiz</a>
        <a id="conta" href="./conta.html" class="animation-header">Conta</a>`
     } else {

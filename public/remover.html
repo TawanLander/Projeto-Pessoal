@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="view-transition" content="same-origin">
+    <title>Vou Pensar</title>
+    <link rel="stylesheet" href="./sources/css/all.css" />
+    <link rel="stylesheet" href="./sources/css/remover.css" />
+    <link rel="icon" href="" />
+    <script src="./sources/js/removerQuiz.js" defer></script>
+    <script src="./sources/js/componentesPagina.js" defer></script>
+    <script src="./sources/js/sessao.js" defer></script>
+  </head>
+  <body onload="verificarSessao('especial'), carregarElementos(), deletarQuiz()">
+    <header></header>
+    <main>
+        <div class="container">
+            <div class="remover" id="remover-quizes">
+                <h1>Tem certeza que deseja remover esse quiz?</h1>
+                <div class="quiz">
+                    <div><img></div>
+                    <div class="geral"><h1></h1>
+                    <div class="content"></div>
+                    <div class="content"></div>
+                    <div class="content"></div>
+                    <div class="content"></div>
+                    <div class="content"></div>
+                </div>
+            </div>
+            <div class="botoes">
+                <button class="sim" onclick="remover()">Sim, Remover Quiz!</button>
+                <button class="nao" onclick="voltar()">Não, Voltar!</button>
+            </div>
+        </div>
+        <div class="confirmacao sumir"></div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

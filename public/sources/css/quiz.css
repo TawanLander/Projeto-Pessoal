@@ -2,7 +2,7 @@
     width: clamp(400px, 60dvw, 1200px);
     min-height: clamp(600px, 60vh, 900px);
     height: fit-content;
-    background-color: var(--preto-fosco);
+    background-color: var(--preto);
     color: var(--cor-texto);
     border-radius: 15px;
 }
@@ -51,7 +51,7 @@
     transition: all .2s ease;
 }
 
-.opcao input[type="radio"]:checked+.check {
+.opcao input[type="radio"]:checked+.check, .opcao input[type="checkbox"]:checked+.check {
     background-color: var(--cor-texto);
     border-color: var(--cor-texto);
 }
@@ -68,7 +68,7 @@ img {
 }
 
 .sumir {
-    display: none;
+    display: none !important;
     transition: all .5s ease;
 }
 
@@ -114,4 +114,58 @@ button:hover {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.terminar{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: var(--bgc);
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid var(--preto);
+    width: 45%;
+    min-height: 30%;
+    height: fit-content;
+    align-items: center;
+    justify-content: center;
+    color: var(--preto);
+}
+.texto, #pontuacao, #maxima{
+    font-size: x-large;
+    font-weight: 600;
+}
+.terminar h1{
+    font-size: xx-large;
+    font-weight: 800;
+}
+
+.terminar button{
+    background-color: var(--preto);
+    color: var(--cor-texto);
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+.detalhes{
+    display: flex;
+    flex-direction: column;
+}
+
+.detalhando{
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0 15px 0;
+}
+
+.detalhando span{
+    font-size: large;
+    font-weight: 550;
+}
+
+.erro{
+    color: red;
+    font-size: large;
+    align-self: right;
+    margin: 15px;
 }
