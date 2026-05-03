@@ -230,3 +230,20 @@ input[type="checkbox"]{
     cursor: pointer;
     align-self: center;
 }
+
+.confirmacao {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #fff;
+    padding: 60px;
+    border: 2px solid var(--preto);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--box-shadow);
+    font-size: xx-large;
+}
+
+.confirmacao span {
+    font-size: xx-large;
+    color: darkgreen
+}

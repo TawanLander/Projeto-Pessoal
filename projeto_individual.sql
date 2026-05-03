@@ -5,7 +5,15 @@ show tables;
 select count(genero) from usuario group by genero;
 
 
-show columns from quiz;
+show columns from usuario;
+
+alter table quiz rename column avaliacao to gostados;
+
+select * from perguntas;
+
+select * from opcoes;
+
+describe opcoes;
 
 create table usuario(
 id int primary key auto_increment,
@@ -28,41 +36,45 @@ delete from usuario where id = 0;
 select * from usuario;
 
 create table quiz(
-id int primary key auto_increment,
+idQuiz int primary key auto_increment,
 titulo varchar(60) not null,
 genero varchar(30) not null,
 tipo varchar(30) not null,
-img varchar(500),
-avaliacao float,
+imagem varchar(500),
+gostados int,
 fkUsuario int,
-constraint fkUsuario_quiz foreign key (fkUsuario) references usuario(id)
+constraint fkUsuario_quiz foreign key (fkUsuario) references usuario(idUsuario)
 );
-
-describe quiz;
-
-alter table quiz add column genero varchar(30);
-
-alter table perguntas add column tipo char(1);
-
-insert into quiz (nome, tipo) values 
-('O Quão bem você conhece Jujutsu Kaisen', 'Perguntas e Respostas');
-update quiz set img = 'https://imgs.search.brave.com/rs3IF83xfOwf66lYvTOQAC0Wx9pnvvDzJVPEbNG_bfg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9taXIt/czMtY2RuLWNmLmJl/aGFuY2UubmV0L3By/b2plY3RzLzQwNC9l/ZmIxOWMxNzc2NTI1/MjEuWTNKdmNDd3hO/VEF3TERFeE56TXNN/Q3d6TkRrLmpwZw'
-where id = 3;
+alter table quiz modify column gostados int;
+alter table quiz rename column img to imagem;
 
 create table quizes_completos(
 dthr datetime default current_timestamp(),
 fkUsuario int,
 fkQuiz int,
+acertos varchar(150),
 constraint pkDupla_quizes_completos primary key (fkUsuario, fkQuiz),
-constraint fkUsuario_quizes_completos foreign key (fkUsuario) references usuario(id),
-constraint fkQuiz_quizes_completos foreign key (fkQuiz) references quiz(id)
+constraint fkUsuario_quizes_completos foreign key (fkUsuario) references usuario(idUsuario),
+constraint fkQuiz_quizes_completos foreign key (fkQuiz) references quiz(idQuiz)
+);
+
+create table acertos(
+fkUsuario int,
+fkQuiz int,
+fkPerguntas int,
+fkOpcoes int,
+selecionado tinyint,
+constraint pkQuadrupla_acertos primary key (fkUsuario, fkQuiz, fkPerguntas, fkOpcoes),
+constraint fkQuizesCompletos_acertos foreign key (fkUsuario, fkQuiz) references quizes_completos(fkUsuario, fkQuiz),
+constraint fkPerguntas_acertos foreign key (fkPerguntas) references perguntas(id),
+constraint fkOpcoes_acertos foreign key (fkOpcoes) references opcoes(id)
 );
 
 create table perguntas(
 id int,
 fkQuiz int,
 constraint pkDupla_perguntas primary key (id, fkQuiz),
-constraint fkQuiz_perguntas foreign key (fkQuiz) references quiz(id),
+constraint fkQuiz_perguntas foreign key (fkQuiz) references quiz(idQuiz) on delete cascade,
 titulo varchar(60) not null,
 imagem varchar(500) not null,
 tipo char(1) not null
@@ -80,9 +92,8 @@ id int,
 fkPerguntas int,
 fkQuiz int,
 constraint pkTripla_opcoes primary key (id, fkPerguntas, fkQuiz),
-constraint fkPerguntas_opcoes foreign key (fkPerguntas) references perguntas(id),
-constraint fkQuiz_opcoes foreign key (fkQuiz) references quiz(id),
-nome varchar(100),
+constraint fkPerguntas_opcoes foreign key (fkPerguntas, fkQuiz) references perguntas(id, fkQuiz) on delete cascade,
+titulo varchar(100),
 tipo TINYINT
 );
 
@@ -96,27 +107,94 @@ insert into opcoes (id, fkPerguntas, fkQuiz, nome) values
 select * from opcoes;
 select * from quiz;
 
-insert into quiz (nome, tipo, img) values 
-('Você ama mais HunterXHunter do que a Iasmin?', 'Anime', 'https://imgs.search.brave.com/NKktO8yCXQMplrZ8vJUWMPTJHw0M2-gzLVZW1vUDEl4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMwLmNicmltYWdl/cy5jb20vd29yZHBy/ZXNzL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDIzLzEwL2dvbi1r/aWxsdWEtbGVvcmlv/LWFuZC1rdXJhcGlr/YS1vbi1odW50ZXIt/ZXhhbS1hcmMuanBn/P3E9NDkmZml0PWNy/b3Amdz0zNjAmaD0y/NDAmZHByPTI');
+insert into quiz (titulo, tipo, genero, imagem) values 
+('Você ama mais HunterXHunter do que a Iasmin?', 'Conhecimento Geral', 'Anime', 'https://imgs.search.brave.com/NKktO8yCXQMplrZ8vJUWMPTJHw0M2-gzLVZW1vUDEl4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMwLmNicmltYWdl/cy5jb20vd29yZHBy/ZXNzL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDIzLzEwL2dvbi1r/aWxsdWEtbGVvcmlv/LWFuZC1rdXJhcGlr/YS1vbi1odW50ZXIt/ZXhhbS1hcmMuanBn/P3E9NDkmZml0PWNy/b3Amdz0zNjAmaD0y/NDAmZHByPTI');
 
-insert into perguntas (id, fkQuiz, nome, img) values 
-(1, 6, 'Qual o tipo de NEN do Killua e Gon?', 'https://imgs.search.brave.com/kVThxUfQPLxf2i3cXH97v_8P4g0HjapOeJvJpR8Y3dQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMuYmVlYm9tLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAy/My8wNi9UZW4uanBn/P3c9NjQw'),
-(2, 6, 'Que tipo de vilão o Hisoka é?', 'https://imgs.search.brave.com/hODwGctnnHkfBiGsdFG2RwLuY-eXkGRMidGXRdvf3g0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMwLmdhbWVyYW50/aW1hZ2VzLmNvbS93/b3JkcHJlc3Mvd3At/Y29udGVudC91cGxv/YWRzLzIwMjEvMTEv/SHVudGVyLVgtSHVu/dGVyLS0tUGhhbnRv/bS1Ucm91cGUtTWVt/YmVyLUhpc29rYS1N/YXJyb3ctSW4tSGlz/LVByaW1lLUdvaW5n/LUluLUZvci1UaGUt/S2lsbC5qcGc_cT01/MCZmaXQ9Y3JvcCZ3/PTgyNSZkcHI9MS41'),
-(3, 6, 'Quais personagens vieram do continente negro?', 'https://imgs.search.brave.com/so3lMdvTf7uXS6MFzxmPutLvNFd7eaei3CCYeMku_hA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly8yaW1n/Lm5ldC9oL29pNjUu/dGlueXBpYy5jb20v/ZG4weWdnLnBuZw');
+insert into perguntas (id, fkQuiz, titulo, imagem, tipo) values 
+(1, 1, 'Qual o tipo de NEN do Killua e Gon?', 'https://imgs.search.brave.com/kVThxUfQPLxf2i3cXH97v_8P4g0HjapOeJvJpR8Y3dQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMuYmVlYm9tLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAy/My8wNi9UZW4uanBn/P3c9NjQw', 'n'),
+(2, 1, 'Que tipo de vilão o Hisoka é?', 'https://imgs.search.brave.com/hODwGctnnHkfBiGsdFG2RwLuY-eXkGRMidGXRdvf3g0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMwLmdhbWVyYW50/aW1hZ2VzLmNvbS93/b3JkcHJlc3Mvd3At/Y29udGVudC91cGxv/YWRzLzIwMjEvMTEv/SHVudGVyLVgtSHVu/dGVyLS0tUGhhbnRv/bS1Ucm91cGUtTWVt/YmVyLUhpc29rYS1N/YXJyb3ctSW4tSGlz/LVByaW1lLUdvaW5n/LUluLUZvci1UaGUt/S2lsbC5qcGc_cT01/MCZmaXQ9Y3JvcCZ3/PTgyNSZkcHI9MS41', 'n'),
+(3, 1, 'Quais personagens vieram do continente negro?', 'https://imgs.search.brave.com/so3lMdvTf7uXS6MFzxmPutLvNFd7eaei3CCYeMku_hA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly8yaW1n/Lm5ldC9oL29pNjUu/dGlueXBpYy5jb20v/ZG4weWdnLnBuZw', 'n');
 
-insert into opcoes (id, fkQuiz, fkPerguntas, nome) values 
-(1, 6, 1, 'Fortificador e Fortificador'),
-(2, 6, 1, 'Especialista e Especialista'),
-(3, 6, 1, 'Transmutador e Fortificador'),
-(4, 6, 1, 'Manipulação e Emissão'),
-(1, 6, 2, 'Monstro'),
-(2, 6, 2, 'Manipulador'),
-(3, 6, 2, 'Trágico'),
-(4, 6, 2, 'Fanático'),
-(1, 6, 3, 'Formiga Quimera, Aluka, Don Freecss'),
-(2, 6, 3, 'Formiga Quimera, Gon, Brion'),
-(3, 6, 3, 'As 5 calamidades, Aluka, Kurapika'),
-(4, 6, 3, 'As 5 calamidades, Formiga Quimera, Don Freecss');
+insert into opcoes (id, fkQuiz, fkPerguntas, titulo) values 
+(1, 1, 1, 'Fortificador e Fortificador'),
+(2, 1, 1, 'Especialista e Especialista'),
+(3, 1, 1, 'Transmutador e Fortificador'),
+(4, 1, 1, 'Manipulação e Emissão'),
+(1, 1, 2, 'Monstro'),
+(2, 1, 2, 'Manipulador'),
+(3, 1, 2, 'Trágico'),
+(4, 1, 2, 'Fanático'),
+(1, 1, 3, 'Formiga Quimera, Aluka, Don Freecss'),
+(2, 1, 3, 'Formiga Quimera, Gon, Brion'),
+(3, 1, 3, 'As 5 calamidades, Aluka, Kurapika'),
+(4, 1, 3, 'As 5 calamidades, Formiga Quimera, Don Freecss');
 
-update perguntas set img = 'https://imgs.search.brave.com/TiiX7JcIKjLqPZkE4VwWUhnlmy6YRFHjS5lEvGCe-hk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS50ZW5vci5jb20v/V2ZCT0NoZ1g0UWtB/QUFBTS9nb24uZ2lm.gif'
-where id = 3 and fkQuiz = 6;
+
+-- Quiz 1: Geografia
+INSERT INTO quiz (titulo, genero, tipo, imagem, gostados, fkUsuario) VALUES
+('Capitais do Mundo', 'Geografia', 'multipla_escolha', 'geografia.jpg', 0, 1);
+
+INSERT INTO perguntas (id, fkQuiz, titulo, imagem, tipo) VALUES
+(1, 2, 'Qual é a capital da França?', 'franca.jpg', 'M'),
+(2, 2, 'Qual é a capital do Japão?', 'japao.jpg', 'M'),
+(3, 2, 'Qual é a capital da Australia?', 'australia.jpg', 'M');
+
+INSERT INTO opcoes (id, fkPerguntas, fkQuiz, titulo, tipo) VALUES
+(1, 1, 2, 'Paris', 1),
+(2, 1, 2, 'Londres', 0),
+(3, 1, 2, 'Berlim', 0),
+(4, 1, 2, 'Roma', 0),
+(1, 2, 2, 'Osaka', 0),
+(2, 2, 2, 'Tóquio', 1),
+(3, 2, 2, 'Hiroshima', 0),
+(4, 2, 2, 'Kyoto', 0),
+(1, 3, 2, 'Sydney', 0),
+(2, 3, 2, 'Melbourne', 0),
+(3, 3, 2, 'Camberra', 1),
+(4, 3, 2, 'Brisbane', 0);
+
+-- Quiz 2: Filmes
+INSERT INTO quiz (titulo, genero, tipo, imagem, gostados, fkUsuario) VALUES
+('Cinema Clássico', 'Entretenimento', 'multipla_escolha', 'cinema.jpg', 0, 1);
+
+INSERT INTO perguntas (id, fkQuiz, titulo, imagem, tipo) VALUES
+(1, 3, 'Em que ano foi lançado Titanic?', 'titanic.jpg', 'M'),
+(2, 3, 'Quem dirigiu Pulp Fiction?', 'pulpfiction.jpg', 'M'),
+(3, 3, 'Qual ator interpreta o Coringa em 2019?', 'coringa.jpg', 'M');
+
+INSERT INTO opcoes (id, fkPerguntas, fkQuiz, titulo, tipo) VALUES
+(1, 1, 3, '1995', 0),
+(2, 1, 3, '1997', 1),
+(3, 1, 3, '1999', 0),
+(4, 1, 3, '2001', 0),
+(1, 2, 3, 'Steven Spielberg', 0),
+(2, 2, 3, 'Martin Scorsese', 0),
+(3, 2, 3, 'Quentin Tarantino', 1),
+(4, 2, 3, 'Christopher Nolan', 0),
+(1, 3, 3, 'Christian Bale', 0),
+(2, 3, 3, 'Heath Ledger', 0),
+(3, 3, 3, 'Joaquin Phoenix', 1),
+(4, 3, 3, 'Jack Nicholson', 0);
+
+-- Quiz 3: Tecnologia
+INSERT INTO quiz (titulo, genero, tipo, imagem, gostados, fkUsuario) VALUES
+('Mundo da Tecnologia', 'Tecnologia', 'multipla_escolha', 'tecnologia.jpg', 0, 1);
+
+INSERT INTO perguntas (id, fkQuiz, titulo, imagem, tipo) VALUES
+(1, 4, 'Quem fundou a Microsoft?', 'microsoft.jpg', 'M'),
+(2, 4, 'Em que ano o iPhone foi lançado?', 'iphone.jpg', 'M'),
+(3, 4, 'O que significa a sigla HTTP?', 'http.jpg', 'M');
+
+INSERT INTO opcoes (id, fkPerguntas, fkQuiz, titulo, tipo) VALUES
+(1, 1, 4, 'Steve Jobs', 0),
+(2, 1, 4, 'Bill Gates', 1),
+(3, 1, 4, 'Elon Musk', 0),
+(4, 1, 4, 'Mark Zuckerberg', 0),
+(1, 2, 4, '2005', 0),
+(2, 2, 4, '2006', 0),
+(3, 2, 4, '2007', 1),
+(4, 2, 4, '2008', 0),
+(1, 3, 4, 'HyperText Transfer Protocol', 1),
+(2, 3, 4, 'High Transfer Text Protocol', 0),
+(3, 3, 4, 'Hyper Terminal Transfer Process', 0),
+(4, 3, 4, 'Home Tool Text Processor', 0);

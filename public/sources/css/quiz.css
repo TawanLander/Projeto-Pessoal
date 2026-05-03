@@ -169,3 +169,18 @@ button:hover {
     align-self: right;
     margin: 15px;
 }
+
+.gostei{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 2.5px;
+    cursor: pointer;
+}
+
+.amei{
+    align-self: center;
+    justify-self: center;
+}

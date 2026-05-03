@@ -13,6 +13,7 @@ function obterDados() {
 
 async function plotarDados(r) {
     const sessao = await verificarSessao();
+    const cargo = await verificarSessao('cargo');
 
     const divQuizes = document.getElementById('div-quizes');
     r.forEach(item => {
@@ -31,7 +32,7 @@ async function plotarDados(r) {
     <div class="content">Gênero: ${item.genero}</div>
     <div class="content">Tipo: ${item.tipo}</div>
     <div class="content">Quantidade de Perguntas: ${item.qtd}</div>
-    <div class="content">Avaliação: 4.5</div>
+    <div class="content">Gostados: 4.5</div>
     `
 
     if(item.fkUsuario != null){
@@ -39,8 +40,9 @@ async function plotarDados(r) {
     } else {
      msg += `<div class="content">Feito por: GeeQuiz</div></div>`   
     }
-
-    msg += `<div class="deletar" onclick="removerQuiz(${item.idQuiz})"><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#571302"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></div></div>`
+    if(cargo === 'a'){
+        msg += `<div class="deletar" onclick="removerQuiz(${item.idQuiz})"><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#571302"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></div></div>`
+    }
 
     divQuizes.innerHTML += msg;
     });

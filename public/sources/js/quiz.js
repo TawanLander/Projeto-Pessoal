@@ -11,7 +11,8 @@ function pegarDados() {
     fetch('/quizes/perguntas', {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'token': sessionStorage.getItem('token')
         },
         body: JSON.stringify({
             fkQuiz: quiz
@@ -22,7 +23,8 @@ function pegarDados() {
                 fetch('/quizes/opcoes', {
                     method: 'POST',
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        'token': sessionStorage.getItem('token')
                     },
                     body: JSON.stringify({
                         fkQuiz: quiz
@@ -41,14 +43,13 @@ function pegarDados() {
 }
 
 function plotarPerguntas(perguntas, opcoes) {
-    // let final = document.querySelector('.terminar') // ! COLOCANDO A IMAGEM DA CAPA DO QUIZ NO FUNDO DA PARTE TERMINAR DO QUIZ
-    // console.log(final)
-    // final.style.backgroundImage = `url()`;
 
     sessionStorage.setItem('pergunta', 0);
 
     for (let i = 0; i < perguntas.length; ++i) {
+
         let filter = opcoes.filter(opcao => opcao.fkPerguntas === perguntas[i].id);
+
         let msg = '';
         if (i === 0) {
             msg += `<div id="${i}" ><div class="pergunta">`
@@ -107,6 +108,7 @@ function passarPergunta(atual) {
         erro[pergunta].classList.add('aparecer');
         return false;
     };
+    
     erro[pergunta].classList.remove('aparecer');
     erro[pergunta].classList.add('sumir');
 
@@ -176,13 +178,13 @@ function contarPontuacao() {
         if (i.checked) {
             acerto = true
         }
-        pontuacao[pontuacao.length - 1].acertos.push({ selecionou: acerto, valor: i.value})
+        pontuacao[pontuacao.length - 1].acertos.push({ selecionou: acerto, valor: i.value })
     })
 }
 
 function terminarQuiz() {
     const resultado = passarPergunta()
-    if(!resultado) return;
+    if (!resultado) return;
 
     const e = document.getElementById('quiz').classList.add('sumir')
 
@@ -202,6 +204,25 @@ function terminarQuiz() {
 
     final.classList.remove('sumir');
     final.classList.add('aparecer');
+    
+    fetch('/quizes/terminar', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            'token': sessionStorage.getItem('token')
+        },
+        body: JSON.stringify({
+            fkQuiz: quiz
+        })  
+    }).then(result => {
+        if(result.ok){
+
+        } 
+
+
+    }).catch(e =>{
+        console.error(e)
+    });
 }
 
 function verDetalhes() {
@@ -216,7 +237,7 @@ function verDetalhes() {
             let acertos = pontuacao[i].acertos[e];
             if (acertos.selecionou && acertos.valor === '1') {
                 certo = 'Acertou'
-            } else if(!acertos.selecionou && acertos.valor === '0'){
+            } else if (!acertos.selecionou && acertos.valor === '0') {
                 certo = 'Acertou'
             };
 
@@ -227,3 +248,32 @@ function verDetalhes() {
 
     div.innerHTML = msg
 }
+/*
+const coracao = document.getElementById('coracao');
+const coracaoPath = document.getElementById('coracao-path');
+
+coracao.addEventListener('mouseenter', () => {
+    coracaoPath.setAttribute('d', 'm480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Z');
+    coracao.style.transform = 'scale(1.05)'
+})
+
+coracao.addEventListener('mouseleave', () => {
+    coracaoPath.setAttribute('d', 'm480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z');
+    coracao.style.transform = 'scale(1)'
+});
+
+coracao.addEventListener('click', () => {
+    fetch('/quizes/gostei', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            'token': sessionStorage.getItem('token')
+        },
+        body: JSON.stringify({
+            id: sessionStorage.getItem('quiz')
+        })
+    }).catch(e => {
+        console.log(e);
+    });
+})
+*/

@@ -51,10 +51,6 @@ function montagemPergunta() {
     img.src = imgPergunta.value;
 }
 
-function criarQuiz() {
-
-}
-
 function menuPerguntas(o) {
 
     erroQuiz.innerHTML = '';
@@ -90,6 +86,7 @@ function adicionarMarcadores() {
         navegacao.innerHTML = `
             <div class="passar">
             <button onclick="salvarPergunta()">Próxima Pergunta</button>
+            <button onclick="terminarQuiz()">Terminar Quiz</button>
             </div>
             `
     } else if (tamanho <= 4) { // MAX DE PERGUNTAS: 25
@@ -252,7 +249,11 @@ async function terminarQuiz() {
 
     salvarPergunta();
 
-    const fetchInformacao = await fetch('/quizes/informacao').then(r => {
+    const fetchInformacao = await fetch('/quizes/informacao',{
+        headers: {
+            'token': sessionStorage.getItem('token')
+        }
+    }).then(r => {
         if (r.ok) {
             return r.json()
         } else {
@@ -262,12 +263,11 @@ async function terminarQuiz() {
 
     let id = fetchInformacao[0]['id'];
 
-    console.log('Id do próximo quiz: ' + id);
-
     const fetchQuiz = await fetch('/quizes/cadastrar/quiz', {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'token': sessionStorage.getItem('token')
         },
         body: JSON.stringify({
             id: Number(id),
@@ -275,7 +275,6 @@ async function terminarQuiz() {
             imagem: imgQuiz.value,
             genero: generoQuiz.value,
             tipo: tipoQuiz.value,
-            fkUsuario: JSON.parse(sessionStorage.getItem('usuario')).id
         })
     })
 
@@ -292,7 +291,8 @@ async function terminarQuiz() {
         const fetchPerguntas = await fetch('quizes/cadastrar/perguntas', {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                'token': sessionStorage.getItem('token')
             },
             body: JSON.stringify({
                 id: i + 1,
@@ -317,7 +317,8 @@ async function terminarQuiz() {
             const fetchOpcoes = await fetch('/quizes/cadastrar/opcoes', {
                 method: 'POST',
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'token': sessionStorage.getItem('token')
                 },
                 body: JSON.stringify({
                     id: e + 1,
@@ -332,68 +333,18 @@ async function terminarQuiz() {
                 throw new Error(`Erro no Fetch Cadastrar Opcoes" ${fetchOpcoes.status}`);
             }
         }
+
     }
 
+    const confirmacao = document.getElementById('confirmacao');
 
-    /*fetch('/quizes/informacao').then(resultado => {
-        if (resultado.ok) {
-            resultado.json().then(i => {
-                var id = JSON.stringify(i).replaceAll(`{id: `, '').replaceAll('[', '').replaceAll(']', '').replaceAll('}', '');
+    confirmacao.classList.add('aparecer');
+    confirmacao.classList.remove('sumir');
 
-                // CADASTRANDO O QUIZ NO BANCO DE DADOS
-                fetch('/quizes/cadastrar/quiz', {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        id: Number(id),
-                        titulo: tituloQuiz.value,
-                        imagem: imgQuiz.value,
-                        genero: generoQuiz.value,
-                        tipo: tipoQuiz.value,
-                        fkUsuario: JSON.parse(sessionStorage.getItem('usuario')).id
-                    })
-                }).then(res => { // * PARÂMETRO DE VERIFICAÇÃO SE A RESPOSTA NÃO FOR OK
-                    if (!res.ok) {
-                        throw new Error(`Erro ao criar quiz: ${res.status}`)
-                        return
-                    }
-                    // ! DEPOIS DE INSIRA O QUIZ NO BANCO DE DADOS VAI INSERIR CADA PERGUNTA
-                    for (let i = 0; i < perguntasArray.length; ++i) {
-                        let titulo = perguntasArray[i].titulo;
-                        let imagem = perguntasArray[i].imagem;
-                        let tipo = perguntasArray[i].tipo;
+    const perguntas = document.getElementById('criar-perguntas');
+    perguntas.classList.add('sumir');
 
-                        fetch('/quizes/cadastrar/perguntas', {
-                            method: 'POST',
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                id: i + 1, // ! SEMPRE SOMARÁ O I DO FOR COM 1 PARA O ID, MESMA LÓGICA SERÁ USADA DA FKPERGUNTAS DAS OPÇÕES
-                                titulo: titulo,
-                                imagem: imagem,
-                                tipo: tipo,
-                                fkQuiz: Number(id)
-                            })
-                        }).then(res => { // * PARÂMETRO DE VERIFICAÇÃO SE A RESPOSTA NÃO FOR OK 
-                            if (!res.ok) {
-                                throw new Error(`Erro ao criar pergunta ${res.status}`)
-                                return
-                            }
-                            for (let e = 0; e < perguntasArray[i].opcoes.length; ++e) {
-
-                            }
-                            // TODO DEPOIS DE INSERIR A PERGUNTA NO BANCO IRÁ INSERIR AS OPÇÕES (ESSE FOR ESTÁ DENTRO DO OUTRO FOR)
-                        }).catch(e => {
-                            console.error(e.sqlMessage) // ! LOGANDO O ERRO SQL DO FETCH PERGUNTAS
-                        })
-                    }
-                }).catch(e => {
-                    console.error(e.sqlMessage); // ! LOGANDO O ERRO SQL CADASTRO QUIZ;
-                })
-            })
-        }
-    })*/
+    setTimeout(() => {
+        window.location.href = './index.html'
+    }, 3000);
 }

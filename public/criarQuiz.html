@@ -16,7 +16,7 @@
     <script src="./sources/js/sessao.js" defer></script>
 
   </head>
-  <body onload="verificarSessao('comum'), carregarElementos('criarQuiz'), montagemQuiz(5)">
+  <body onload="verificarSessao('redirecionar'), carregarElementos('criarQuiz'), montagemQuiz(5)">
     <header></header>
     <main>
         <div class="container"> <!--CONTAINER GERAL, ENVOLVE TODA A PÁGINA-->
@@ -53,7 +53,7 @@
                 <div class="content" id="genero-quiz-template">Insira o gênero</div>
                 <div class="content" id="tipo-quiz-template">Insira o tipo</div>
                 <div class="content">Quantidade de perguntas</div>
-                <div class="content">Avaliação</div>
+                <div class="content">Gostados</div>
                 <div class="content" id="nome-quiz-template"></div>
               </div> 
             </div>
@@ -121,6 +121,9 @@
               <div id="erro-passar" class="erro sumir"></div>
             </div> <!--FIM DA DIV CRIAR PERGUNTAS-->
         </div> <!--FIM CONTAINER GERAL-->
+
+        <div id="confirmacao" class="confirmacao sumir"><span>Cadastro do Quiz Realizado!</span> Redirecionando você ao Início!</div>
+
     </main>
     <footer></footer>
 </body>

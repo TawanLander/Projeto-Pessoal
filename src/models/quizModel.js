@@ -44,19 +44,28 @@ function cadastrarOpcoes(id, fkPerguntas, fkQuiz, titulo, verdadeiro){
 }
 
 async function deletar(id){
-    let queryOpcoes = `delete from opcoes where fkPerguntas in (select id from perguntas where fkQuiz = ?)`
-    let queryPerguntas = `delete from perguntas where fkQuiz = ?`
-    let queryQuiz = `delete from quiz where idQuiz = ?`
+    let query = `delete from quiz where idQuiz = ?`
 
     try {
-        await bd.executar(queryOpcoes, [id]);
-        await bd.executar(queryPerguntas, [id]);
-        return await bd.executar(queryQuiz, [id]);
+        await bd.executar(query, [id]);
 
     } catch(e) {
         console.log(e)
         return;
     }   
+}
+
+function gostei(id){
+    let query = 'update quiz set gostados = gostados + 1 where idQuiz = ?'
+
+    return db.executar(query, [id]);
+}
+
+function terminar(idQuiz, idUsuario){
+    let query = 'insert into quizes_completos (fkQuiz, fkUsuario) values (?, ?)'
+    db.executar(query, [idQuiz, idUsuario]);
+    
+    query = 'insert into acertos'
 }
 
 module.exports = {
