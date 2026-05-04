@@ -114,6 +114,6 @@ router.post('/terminar', (req, res) => {
     const idUsuario = user.id;
 
     controller.terminar(req, res, idUsuario);
-})
+});
 
 module.exports = router;

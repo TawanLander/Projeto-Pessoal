@@ -16,19 +16,18 @@ select * from opcoes;
 describe opcoes;
 
 create table usuario(
-id int primary key auto_increment,
+idUsuario int primary key auto_increment,
 nome varchar(60) not null,
 email varchar(60) not null,
-genero varchar(20) not null,
+identidade varchar(20) not null,
 dtNascimento date not null,
 senha varchar(30) not null,
-quizes_concluidos int,
-tipo char(1) not null
+cargo char(1) not null
 );
+select * from quizes_completos;
+select * from acertos;
 
-select * from quiz;
-
-insert into usuario values (default, 'Tawan Lander', 'tlander2007@gmail.com', 'Masculino', '2007-04-02', 'SenhaFortona12#', 0, 'a');
+insert into usuario values (default, 'Tawan Lander', 'tlander2007@gmail.com', 'Masculino', '2007-04-02', 'SenhaFortona12#', 'a');
 insert into usuario values (default, 'Tawan Lander', 'sim@sim.com', 'Feminino', '2007-04-02', 'SenhaFortona15#', 0, 'a');
 insert into usuario values (default, 'Tawan Lander', 'teste@teste.com', 'Prefiro Não Dizer', '2007-04-02', 'SenhaFortona14#', 0, 'a');
 insert into usuario values (default, 'Tawan Lander', 'email@email.com', 'Outro', '2007-04-02', 'SenhaFortona13#', 0, 'a');
@@ -38,34 +37,37 @@ select * from usuario;
 create table quiz(
 idQuiz int primary key auto_increment,
 titulo varchar(60) not null,
-genero varchar(30) not null,
-tipo varchar(30) not null,
+genero varchar(20) not null,
+tipo varchar(20) not null,
 imagem varchar(500),
 gostados int,
 fkUsuario int,
 constraint fkUsuario_quiz foreign key (fkUsuario) references usuario(idUsuario)
 );
+
 alter table quiz modify column gostados int;
 alter table quiz rename column img to imagem;
 
 create table quizes_completos(
-dthr datetime default current_timestamp(),
+id int auto_increment,
+dthr datetime default now(),
 fkUsuario int,
 fkQuiz int,
 acertos varchar(150),
-constraint pkDupla_quizes_completos primary key (fkUsuario, fkQuiz),
+constraint pkTripla_quizes_completos primary key (id, fkUsuario, fkQuiz),
 constraint fkUsuario_quizes_completos foreign key (fkUsuario) references usuario(idUsuario),
 constraint fkQuiz_quizes_completos foreign key (fkQuiz) references quiz(idQuiz)
 );
 
 create table acertos(
+fkQuizesCompletos int,
 fkUsuario int,
 fkQuiz int,
 fkPerguntas int,
 fkOpcoes int,
 selecionado tinyint,
-constraint pkQuadrupla_acertos primary key (fkUsuario, fkQuiz, fkPerguntas, fkOpcoes),
-constraint fkQuizesCompletos_acertos foreign key (fkUsuario, fkQuiz) references quizes_completos(fkUsuario, fkQuiz),
+constraint pkQuintupla_acertos primary key (fkQuizesCompletos, fkUsuario, fkQuiz, fkPerguntas, fkOpcoes),
+constraint fkQuizesCompletos_acertos foreign key (fkQuizesCompletos, fkUsuario, fkQuiz) references quizes_completos(id, fkUsuario, fkQuiz),
 constraint fkPerguntas_acertos foreign key (fkPerguntas) references perguntas(id),
 constraint fkOpcoes_acertos foreign key (fkOpcoes) references opcoes(id)
 );
@@ -135,23 +137,23 @@ INSERT INTO quiz (titulo, genero, tipo, imagem, gostados, fkUsuario) VALUES
 ('Capitais do Mundo', 'Geografia', 'multipla_escolha', 'geografia.jpg', 0, 1);
 
 INSERT INTO perguntas (id, fkQuiz, titulo, imagem, tipo) VALUES
-(1, 2, 'Qual é a capital da França?', 'franca.jpg', 'M'),
-(2, 2, 'Qual é a capital do Japão?', 'japao.jpg', 'M'),
-(3, 2, 'Qual é a capital da Australia?', 'australia.jpg', 'M');
+(1, 1, 'Qual é a capital da França?', 'franca.jpg', 'M'),
+(2, 1, 'Qual é a capital do Japão?', 'japao.jpg', 'M'),
+(3, 1, 'Qual é a capital da Australia?', 'australia.jpg', 'M');
 
 INSERT INTO opcoes (id, fkPerguntas, fkQuiz, titulo, tipo) VALUES
-(1, 1, 2, 'Paris', 1),
-(2, 1, 2, 'Londres', 0),
-(3, 1, 2, 'Berlim', 0),
-(4, 1, 2, 'Roma', 0),
-(1, 2, 2, 'Osaka', 0),
-(2, 2, 2, 'Tóquio', 1),
-(3, 2, 2, 'Hiroshima', 0),
-(4, 2, 2, 'Kyoto', 0),
-(1, 3, 2, 'Sydney', 0),
-(2, 3, 2, 'Melbourne', 0),
-(3, 3, 2, 'Camberra', 1),
-(4, 3, 2, 'Brisbane', 0);
+(1, 1, 1, 'Paris', 1),
+(2, 1, 1, 'Londres', 0),
+(3, 1, 1, 'Berlim', 0),
+(4, 1, 1, 'Roma', 0),
+(1, 2, 1, 'Osaka', 0),
+(2, 2, 1, 'Tóquio', 1),
+(3, 2, 1, 'Hiroshima', 0),
+(4, 2, 1, 'Kyoto', 0),
+(1, 3, 1, 'Sydney', 0),
+(2, 3, 1, 'Melbourne', 0),
+(3, 3, 1, 'Camberra', 1),
+(4, 3, 1, 'Brisbane', 0);
 
 -- Quiz 2: Filmes
 INSERT INTO quiz (titulo, genero, tipo, imagem, gostados, fkUsuario) VALUES

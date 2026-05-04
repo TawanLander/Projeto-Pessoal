@@ -11,27 +11,19 @@
     <script src="./sources/js/script.js" defer></script>
     <script src="./sources/js/componentesPagina.js" defer></script>
     <script src="./sources/js/main.js" defer></script>
+    <script src="./sources/js/sessao.js" defer></script>
 </head>
 <body onload="carregarElementos('login')">
-    <header>
-      <div class="logo">Geequiz</div>
-      <div class="container">
-        <!--Parte do INÍCIO-->
-        <a class="a-resto" href="./index.html">Início</a>
-          <!--Parte SOBRE NÓS-->
-        <a class="a-resto" href="./sobre.html">Sobre Nós</a>
-          <!--Parte de LOGIN-->
-        <a class="atual animation-header" href="./login.html">Login</a>
-    </header>
+    <header></header>
     <main>
         <div class="container">
             <div class="login">
                 <h1>Login</h1>
                 <label>Email</label>
-                <input spellcheck="false" type="text" id="ipt-email" placeholder="email@email.com" required oninput="verificarEmail()" onclick="verificarEmail()" onblur="limparClass()">
+                <input value="tlander2007@Gmail.com" autocomplete="off" spellcheck="false" type="text" id="ipt-email" placeholder="email@email.com" required oninput="verificarEmail()" onclick="verificarEmail()" onblur="limparClass()">
                 <div id="erro-email" class="erro sumir">Email está incorreto! Verifique a digitação.</div>
                 <label>Senha</label>
-                <input spellcheck="false" type="password" id="ipt-senha" placeholder="******" required oninput="verificarSenha()" onclick="verificarSenha()" onblur="limparClass()">
+                <input value="SenhaFortona12#" spellcheck="false" type="password" id="ipt-senha" placeholder="******" required oninput="verificarSenha()" onclick="verificarSenha()" onblur="limparClass()">
                 <div id="erro-senha" class="erro sumir">
 
                 </div>
@@ -42,6 +34,6 @@
             </div>
         </div>
     </main>
-    <footer>&copy; 2026 Geequiz - Todos os Direitos Reservados</footer>
+    <footer></footer>
 </body>
 </html>

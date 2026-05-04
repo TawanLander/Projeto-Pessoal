@@ -11,10 +11,10 @@ function autenticar(req, res) {
     } else {
 
         usuarioModel.autenticar(email, senha)
-            .then(i => {
-                if(!i) return res.status(400).send('Você não tem cadastro!'); // SE I RETORNAR FALSE ELE RETORNA E DA ERRO
+            .then(token => {
+                if(!token) return res.status(400).send('Você não tem cadastro!'); // SE TOKEN RETORNAR FALSE ELE RETORNA E DA ERRO
                 res.json({
-                    token: i
+                    token: token
                 });
             }).catch(erro => {
                 console.log(erro);
@@ -22,7 +22,6 @@ function autenticar(req, res) {
                 res.status(500).json(erro.sqlMessage);
             });
     }
-
 }
 
 function cadastrar(req, res) {
@@ -58,16 +57,8 @@ function cadastrar(req, res) {
     }
 }
 
-function contarGenero(req, res) {
-    usuarioModel.contarGenero(req, res).then(r => {
-        res.status(200).json(r);
-    }).catch(e => {
-        res.status(400).json(e.sqlMessage);
-    });
-}
-
-function contarIdade(req, res) {
-    usuarioModel.contarIdade(req, res).then(r => {
+function informacoes(req, res) {
+    usuarioModel.informacoes(req, res).then(r => {
         res.status(200).json(r);
     }).catch(e => {
         res.status(400).json(e.sqlMessage);
@@ -78,6 +69,5 @@ function contarIdade(req, res) {
 module.exports = {
     autenticar,
     cadastrar,
-    contarGenero,
-    contarIdade
+    informacoes,
 }

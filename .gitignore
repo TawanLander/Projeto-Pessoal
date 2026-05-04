@@ -1,0 +1,5 @@
+# PARA O GIT IGNORAR ESSES ARQUIVOS NA HORA DO GIT ADD
+
+node_modules/
+.env.dev
+.env

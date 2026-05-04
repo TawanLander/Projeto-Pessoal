@@ -1,20 +1,24 @@
-function plotarDadosGeneros(array){
-    const quantidade = [];
+// TODO SÓ SERÁ COMENTADO A PRIMERIA FUNÇÃO POIS TODAS AS OUTRAS SÃO IGUAIS
 
-    for(let i = 0; i < array.length; ++i){
-        quantidade.push(array[i]);
-    };
+function plotarDadosGeneros(array){ // ! DEFINE A FUNÇÃO DE PLOTAR OS DADOS NO GRÁFICO
+    const labels = ['Masculino', 'Feminino', 'Não Identificado', 'Outros']; // ! ARRAY COM AS LABELS (COLUNAS DO GRÁFICO)
 
-    // CHART DE MÉDIA DE GÊNEROS NO SITE
+    const valores = [0, 0, 0, 0]; // ! DEFINE OS VALORES (OS NÚMEROS DE CADA COLUNA)
+
+    array.forEach(item => { // ? O BANCO RETORNA DOIS VALORES: O NOME DA PRÓPRIA LABEL E O TOTAL (NÚMERO), DESSA FORMA É POSSÍVEL VERIFICAR O ÍNDICE DA LABEL, SE ESSE ÍNDICE NÃO FOR NEGATIVO (OU SEJA O SELECT RETORNOU ALGO) SIGNIFICA QUE TEM VALORES, E PORTANTO SOBRESCREVE O 0 POR ESSE NOVO VALOR;
+        const index = labels.indexOf(item.identidade);
+
+        if(index != -1) valores[index] = item.total
+    });
     
     var chartQuizes = new Chart(document.getElementById('chart-generos').getContext('2d'), {
         type: 'doughnut',
         data: {
-            labels: ['Masculino', 'Feminino', 'Não Identificado', 'Outros'],
+            labels: labels,
             datasets: [{
                 borderColor: ['navy', 'lightpink', 'gray', 'black'],
                 backgroundColor: ['navy', 'lightpink', 'gray', 'black'],
-                data: quantidade
+                data: valores
             }]
         },
         options: {
@@ -45,21 +49,23 @@ function plotarDadosGeneros(array){
 }
 
 function plotarDadosIdade(array){
-    const quantidade = [];
+    const labels = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-79', '80+'];
 
-    for(let i = 0; i < array.length; ++i){
-        quantidade.push(array[i]);
-    };
+    const valores = [0, 0, 0, 0, 0, 0, 0, 0];
 
-    // CHART DE QUANTIDADE DE IDADES NO SITE
+    array.forEach(item => {
+        const index = labels.indexOf(item.faixa_etaria);
+
+        if(index != -1) valores[index] = item.total
+    });
 
     var chartIdades = new Chart(document.getElementById('chart-idade').getContext('2d'), {
         type: 'bar',
         data: {
-            labels: ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-79', '80+'],
+            labels: labels,
             datasets: [{
                 backgroundColor: ['lightblue', '#1c1c1c'],
-                data: quantidade
+                data: valores
             }]
         },
         options: {
@@ -91,21 +97,23 @@ function plotarDadosIdade(array){
 
 
 function plotarDadosMedia(array){
-    const quantidade = [];
+    const labels = ['1-10', '11-20', '21-30', '31-40', '41-50', '51-60', '61-70', '71-80', '81-90', '91-100', '100+'];
 
-    for(let i = 0; i < array.length; ++i){
-        quantidade.push(array[i]);
-    };
+    const valores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    // CHART DE MÉDIA DE QUIZES FEITOS POR USUÁRIO
+    array.forEach(item => {
+        const index = labels.indexOf(item.total_quizes);
+
+        if(index != -1) valores[index] = item.total
+    });
 
     var chartMediaQuizes = new Chart(document.getElementById('chart-mediaQuizes').getContext('2d'), {
         type: 'bar',
         data: {
-            labels: ['1-10', '11-20', '21-30', '31-40', '41+'],
+            labels: labels,
             datasets: [{
                 backgroundColor: ['rgb(0, 0, 71)', 'rgb(0, 72, 94)'],
-                data: quantidade
+                data: valores
             }]
         },
         options: {
@@ -134,33 +142,21 @@ function plotarDadosMedia(array){
     });
 }
 
-fetch('/usuarios/genero', {
+fetch('/usuarios/informacoes', { // ? FETCH PARA FAZER TUDO FUNCIONAR, MANDA UM TOKEN (PORQUE ESSE DADOS SÓ PODEM SER VISTOS POR UM ADMINISTRADOR DO SISTEMA)
     headers: {
         'token': sessionStorage.getItem('token')
     }
-}).then(response => {
-    if(response.ok){
-        response.json().then(r => {
-        let texto = JSON.stringify(r).replaceAll('{"count(identidade)":', '').replaceAll('[', '').replaceAll(']', '').replaceAll('}', '');
-        let array = texto.split(',');
-        plotarDadosGeneros(array);
-        });
+}).then(async response => {
+    if(response.ok){ // ? A RESPOSTA RETORNA UM ARRAY COM OS RESULTADOS E SÓ DIVIDIMOS ELE PARA CADA GRÁFICO
+        const resultado = await response.json();
+
+        plotarDadosGeneros(resultado[0]);
+        plotarDadosIdade(resultado[1]);
+        plotarDadosMedia(resultado[2]);
+
     } else {
         response.text().then(msg => {
-            
+            console.error(msg)
         })
     }
 });
-
-fetch('/usuarios/idade').then(response => {
-    if(response.ok){
-        response.json().then(r => {
-            let texto = JSON.stringify(r).replaceAll('[', '').replaceAll(']', '').replaceAll('}', '').replaceAll('{ "total":', '');
-            let array = texto.split(',');
-            console.log(array);
-            plotarDadosIdade(array)
-        })
-    }
-});
-
-plotarDadosMedia([10, 10, 10, 20, 30]); // Máx 5

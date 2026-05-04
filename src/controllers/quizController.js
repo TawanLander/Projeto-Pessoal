@@ -1,4 +1,4 @@
-var quiz = require('../models/quizModel');
+const quiz = require('../models/quizModel');
 
 function listarInformacoes(req, res) {
     quiz.listarInformacoes().then(resultado => {
@@ -149,15 +149,20 @@ function gostei(req, res) {
 }
 
 function terminar(req, res, idUsuario) {
-    let idQuiz = req.body.id;
+    let idQuiz = req.body.fkQuiz;
+    let array = req.body.array;
+
 
     if (idQuiz === undefined) {
         return res.status(400).send('Você não tem um id válido!')
+    } else if (array === undefined) {
+        return res.status(400).send('Você não tem um array válido!')
     }
 
-    quiz.terminar(idQuiz, idUsuario).then(() => {
+    quiz.terminar(idQuiz, idUsuario, array).then(() => {
         return res.status(200).send('Quiz Concluído com sucesso!')
     }).catch(e => {
+        console.log(`Erro completo: ${e}`);
         return res.status(500).json(e.sqlMessage);
     })
 }

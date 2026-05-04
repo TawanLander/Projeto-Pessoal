@@ -41,14 +41,13 @@ function login() {
             senha: senha.value
         })
     }).then(resposta => {
-        console.log("ESTOU NO THEN DO login()!")
         if (resposta.ok) {
             resposta.json().then(token => {
                 console.log(token);
                 sessionStorage.setItem('token', token.token)
                 setTimeout(function () {
                     window.location = "./index.html";
-                }, 1000);
+                }, 500);
             });
         } else {
             console.log("Houve um erro ao tentar realizar o login!");
