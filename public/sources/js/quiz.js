@@ -251,25 +251,20 @@ function terminarQuiz() {
 function verDetalhes() {
   let div = document.getElementById("detalhes");
   let msg = "";
-  for (let i = 0; i < Number(sessionStorage.getItem("pergunta")); ++i) {
-    msg += `<div class="detalhando"><span>Pergunta: ${i + 1}</span> <span>Pontuacao: ${pontuacao[i].pontuacao}</span>`;
 
-    for (let e = 0; e < pontuacao[i].acertos.length; ++e) {
-      let certo = "Errou";
-      let acertos = pontuacao[i].acertos[e];
-      if (acertos.selecionou && acertos.valor === "1") {
-        certo = "Acertou";
-      } else if (!acertos.selecionou && acertos.valor === "0") {
-        certo = "Acertou";
-      }
+  for (let i = 0; i <= div.children.length; ++i) {
+    const perguntaAtual = div.querySelector(i);
 
-      msg += `<span>Acertos: ${certo}</span>`;
+    const opcoes = perguntaAtual.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+
+    for(let e = 0; e < opcoes.length; ++e){
+      // continuar o código
     }
-    msg += `</div>`;
   }
 
   div.innerHTML = msg;
 }
+
 /*
 const coracao = document.getElementById('coracao');
 const coracaoPath = document.getElementById('coracao-path');

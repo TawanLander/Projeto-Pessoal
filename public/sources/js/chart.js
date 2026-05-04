@@ -1,7 +1,7 @@
 // TODO SÓ SERÁ COMENTADO A PRIMERIA FUNÇÃO POIS TODAS AS OUTRAS SÃO IGUAIS
 
 function plotarDadosGeneros(array){ // ! DEFINE A FUNÇÃO DE PLOTAR OS DADOS NO GRÁFICO
-    const labels = ['Masculino', 'Feminino', 'Não Identificado', 'Outros']; // ! ARRAY COM AS LABELS (COLUNAS DO GRÁFICO)
+    const labels = ['Masculino', 'Feminino', 'Prefiro Não Dizer', 'Outros']; // ! ARRAY COM AS LABELS (COLUNAS DO GRÁFICO)
 
     const valores = [0, 0, 0, 0]; // ! DEFINE OS VALORES (OS NÚMEROS DE CADA COLUNA)
 

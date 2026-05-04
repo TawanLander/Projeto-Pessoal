@@ -30,142 +30,11 @@ function gerarToken() {
   }
 
   // ? TODOS ESSES ARRAYS REPRESENTAM POSSÍVEIS CARACTERES A SEREM INSERIDOS NO TOKEN
-  const letrasMaiusculas = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-  ];
+  const letrasMaiusculas = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 
-  const letrasMinusculas = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-  ];
+  const letrasMinusculas = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 
-  const caracteresEspeciais = [
-    "!",
-    "@",
-    "#",
-    "$",
-    "%",
-    "¨",
-    "&",
-    "*",
-    "(",
-    ")",
-    "-",
-    "_",
-    "+",
-    "=",
-    "[",
-    "]",
-    "{",
-    "}",
-    "|",
-    "/",
-    "?",
-    ">",
-    "<",
-    ",",
-    ".",
-    "~",
-    "^",
-    "`",
-    ":",
-    ";",
-    "§",
-    "°",
-    "ª",
-    "º",
-    "£",
-    "¢",
-    "¬",
-    "¤",
-    "±",
-    "©",
-    "®",
-    "÷",
-    "«",
-    "»",
-    "¿",
-    "¡",
-    "ç",
-    "Ç",
-    "ã",
-    "Ã",
-    "õ",
-    "Õ",
-    "á",
-    "Á",
-    "é",
-    "É",
-    "í",
-    "Í",
-    "ó",
-    "Ó",
-    "ú",
-    "Ú",
-    "â",
-    "Â",
-    "ê",
-    "Ê",
-    "î",
-    "Î",
-    "ô",
-    "Ô",
-    "û",
-    "Û",
-    "à",
-    "À",
-    "ü",
-    "Ü",
-  ];
+  const caracteresEspeciais = ["!","@","#","$","%","¨","&","*","(",")","-","_","+","=","[","]","{","}","|","/","?",">","<",",",".","~","^","`",":",";","§","°","ª","º","£","¢","¬","¤","±","©","®","÷","«","»","¿","¡","ç","Ç","ã","Ã","õ","Õ","á","Á","é","É","í","Í","ó","Ó","ú","Ú","â","Â","ê","Ê","î","Î","ô","Ô","û","Û","à","À","ü","Ü"];
 
   const numeros = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
@@ -261,7 +130,18 @@ function cadastrar(nome, email, identidade, dtNascimento, senha) {
 }
 
 async function informacoes() {
-  let query = `select identidade, count(identidade) as total from usuario group by identidade`;
+  let query = `
+    select 
+      case 
+        when identidade != 'Masculino' and
+        identidade != 'Feminino' and
+        identidade != 'Prefiro Não dizer'
+        then 'Outros'
+        else identidade
+        end as identidade, 
+    count(identidade) as total 
+    from usuario 
+    group by identidade`;
   const genero = await bd.executar(query);
 
   query = `
