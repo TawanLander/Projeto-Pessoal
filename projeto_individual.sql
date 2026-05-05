@@ -53,7 +53,6 @@ id int auto_increment,
 dthr datetime default now(),
 fkUsuario int,
 fkQuiz int,
-acertos varchar(150),
 constraint pkTripla_quizes_completos primary key (id, fkUsuario, fkQuiz),
 constraint fkUsuario_quizes_completos foreign key (fkUsuario) references usuario(idUsuario),
 constraint fkQuiz_quizes_completos foreign key (fkQuiz) references quiz(idQuiz)
@@ -68,8 +67,7 @@ fkOpcoes int,
 selecionado tinyint,
 constraint pkQuintupla_acertos primary key (fkQuizesCompletos, fkUsuario, fkQuiz, fkPerguntas, fkOpcoes),
 constraint fkQuizesCompletos_acertos foreign key (fkQuizesCompletos, fkUsuario, fkQuiz) references quizes_completos(id, fkUsuario, fkQuiz),
-constraint fkPerguntas_acertos foreign key (fkPerguntas) references perguntas(id),
-constraint fkOpcoes_acertos foreign key (fkOpcoes) references opcoes(id)
+constraint fkPerguntas_opcoes foreign key (fkOpcoes) references opcoes(id, fkPerguntas)
 );
 
 create table perguntas(

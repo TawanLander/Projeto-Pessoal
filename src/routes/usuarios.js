@@ -37,8 +37,23 @@ router.get("/verificar", (req, res) => {
   if (!token || !user) {
     return res.status(400).send(false);
   }
-
+  
   res.status(200).send(user.cargo);
+});
+
+router.get("/deslogar", (req, res) => {
+  // ? PRECISA DE TOKEN
+  const token = req.headers["token"];
+  const user = array.usuariosLogados.find((user) => user.token === token);
+
+  if (!token || !user) {
+    return res.status(400).send(false);
+  }
+
+  let index = array.usuariosLogados.indexOf(user);
+  array.usuariosLogados.splice(index);
+
+  res.status(200).send('Usuário deslogado');
 });
 
 router.get("/dados", (req, res) => {

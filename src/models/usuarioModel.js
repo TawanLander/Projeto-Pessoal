@@ -102,6 +102,8 @@ async function autenticar(email, senha) {
 
     const token = gerarToken(); // ! GERO O TOKEN DO USUÁRIO
 
+    const hora = new Date().getHours()
+
     usuariosLogados.push({
       // ? INSIRO TODOS OS DADOS NUM ARRAY, QUE PERMANECERÁ NO BACKEND
       token: token,
@@ -113,6 +115,7 @@ async function autenticar(email, senha) {
       senha: result[0].senha,
       cargo: result[0].cargo,
       quizes: result2[0].quizes_completos,
+      timeout: hora // ? PEGA A HORA ATUAL QUE O TOKEN FOI GERADO
     });
 
     return token; // ? SE TUDO DER CERTO, RETORNA O TOKEN PARA O FRONT

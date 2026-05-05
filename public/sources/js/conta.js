@@ -6,9 +6,9 @@ const BDidade = document.getElementById("bd-idade");
 const BDemail = document.getElementById("bd-email");
 
 let senhaUsuario = '';
+const token = sessionStorage.getItem("token");
 
 async function plotarDadosUsuario() {
-  const token = sessionStorage.getItem("token");
 
   const dados = await fetch("/usuarios/dados", {
     // ? PEGA OS DADOS DO BACKEND DO USUÁRIO LOGADO
@@ -57,4 +57,8 @@ function ocultarSenha() {
     BDsenha.innerHTML = '*********';
     ocultado = true;
   }
+}
+
+function deslogarUsuario(){
+  fetch('/usuarios/')
 }
