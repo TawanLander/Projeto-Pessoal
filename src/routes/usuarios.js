@@ -4,7 +4,17 @@ const router = express.Router();
 const usuarioController = require("../controllers/usuarioController");
 const array = require("../models/usuarioModel");
 
-//Recebendo os dados do html e direcionando para a função cadastrar de usuarioController.js
+function verificarToken(req, res) {
+  const token = req.headers["token"];
+  const user = array.usuariosLogados.find((user) => user.token === token);
+
+  if (!token || !user) {
+    return res.status(400).send(false);
+  }
+
+  usuarioController.verificar(req, res, token);
+}
+
 router.post("/cadastrar", (req, res) => {
   usuarioController.cadastrar(req, res);
 });
@@ -37,7 +47,7 @@ router.get("/verificar", (req, res) => {
   if (!token || !user) {
     return res.status(400).send(false);
   }
-  
+
   res.status(200).send(user.cargo);
 });
 
@@ -54,6 +64,20 @@ router.get("/deslogar", (req, res) => {
   array.usuariosLogados.splice(index);
 
   res.status(200).send('Usuário deslogado');
+});
+
+router.get('/excluir', (req, res) => {
+  // ? PRECISA DE TOKEN
+  const token = req.headers["token"];
+  const user = array.usuariosLogados.find((user) => user.token === token);
+
+  if (!token || !user) {
+    return res.status(400).send(false);
+  }
+
+  const idUsuario = Number(user.id);
+
+  usuarioController.excluir(req, res, idUsuario);
 });
 
 router.get("/dados", (req, res) => {

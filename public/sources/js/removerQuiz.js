@@ -29,24 +29,25 @@ async function remover() {
         })
     });
 
-    let login = true;
-
-
-    if (deletar.ok) {
-        confirmacao.innerHTML = `<h1>Sucesso! Quiz deletado. <br> Redirecionando para a página principal!</h1>`
-    } else {
+    if (!deletar.ok) {
         confirmacao.innerHTML = `<h1>Erro! Tente novamente!</h1>`
-        login = false
+        confirmacao.classList.remove('sumir');
+
+        setTimeout(() => {
+            confirmacao.classList.add('sumir');
+            confirmacao.innerHTML = ``
+        }, 2000)
+
+        return;
     }
 
+    confirmacao.innerHTML = `<h1>Sucesso! Quiz deletado. <br> Redirecionando para a página principal!</h1>`
     confirmacao.classList.remove('sumir');
     sessionStorage.removeItem('quizModel');
 
-    if (login) {
-        setTimeout(() => {
-            window.location.href = './index.html'
-        }, 3000)
-    }
+    setTimeout(() => {
+        window.location.href = './index.html'
+    }, 3000)
 }
 
 function voltar() {

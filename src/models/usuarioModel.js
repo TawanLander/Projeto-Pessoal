@@ -30,11 +30,11 @@ function gerarToken() {
   }
 
   // ? TODOS ESSES ARRAYS REPRESENTAM POSSÍVEIS CARACTERES A SEREM INSERIDOS NO TOKEN
-  const letrasMaiusculas = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  const letrasMaiusculas = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
-  const letrasMinusculas = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+  const letrasMinusculas = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-  const caracteresEspeciais = ["!","@","#","$","%","¨","&","*","(",")","-","_","+","=","[","]","{","}","|","/","?",">","<",",",".","~","^","`",":",";","§","°","ª","º","£","¢","¬","¤","±","©","®","÷","«","»","¿","¡","ç","Ç","ã","Ã","õ","Õ","á","Á","é","É","í","Í","ó","Ó","ú","Ú","â","Â","ê","Ê","î","Î","ô","Ô","û","Û","à","À","ü","Ü"];
+  const caracteresEspeciais = ["!", "@", "#", "$", "%", "¨", "&", "*", "(", ")", "-", "_", "+", "=", "[", "]", "{", "}", "|", "/", "?", ">", "<", ",", ".", "~", "^", "`", ":", ";", "§", "°", "ª", "º", "£", "¢", "¬", "¤", "±", "©", "®", "÷", "«", "»", "¿", "¡", "ç", "Ç", "ã", "Ã", "õ", "Õ", "á", "Á", "é", "É", "í", "Í", "ó", "Ó", "ú", "Ú", "â", "Â", "ê", "Ê", "î", "Î", "ô", "Ô", "û", "Û", "à", "À", "ü", "Ü"];
 
   const numeros = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
@@ -99,10 +99,14 @@ async function autenticar(email, senha) {
       "select count(fkUsuario) as quizes_completos from quizes_completos where fkUsuario = ?"; // ! SOBRESCREVO A VARIÁVEL, AGORA PARA CONTAR QUANTOS QUIZES O USUÁRIO CONCLUIU
 
     const result2 = await bd.executar(query, [result[0].idUsuario]);
+    if(!result2.ok) return false;
 
     const token = gerarToken(); // ! GERO O TOKEN DO USUÁRIO
 
-    const hora = new Date().getHours()
+    query = 'insert into token (token, fkUsuario) values (?, ?)'
+
+    const inserirToken = await bd.executar(query, [token, result[0].idUsuario]);
+    if(!inserirToken.ok) return false;
 
     usuariosLogados.push({
       // ? INSIRO TODOS OS DADOS NUM ARRAY, QUE PERMANECERÁ NO BACKEND
@@ -115,7 +119,6 @@ async function autenticar(email, senha) {
       senha: result[0].senha,
       cargo: result[0].cargo,
       quizes: result2[0].quizes_completos,
-      timeout: hora // ? PEGA A HORA ATUAL QUE O TOKEN FOI GERADO
     });
 
     return token; // ? SE TUDO DER CERTO, RETORNA O TOKEN PARA O FRONT
@@ -189,9 +192,27 @@ async function informacoes() {
   return [genero, faixaEtaria, quizes];
 }
 
+async function excluir(idUsuario) {
+  let update = 'update quiz set fkUsuario = 1 where fkUsuario = ?'
+  const quizes = await bd.executar(update, [idUsuario]);
+
+  if(!quizes.ok) return;
+
+  let query = `delete from usuario where idUsuario = ?`;
+  return bd.executar(query, [idUsuario]);
+}
+
+function verificar(token){
+  let query = 'select token, case when end as situacao from token where token = ?';
+
+  return bd.executar(query, [token]);
+}
+
 module.exports = {
   autenticar,
   cadastrar,
   informacoes,
   usuariosLogados,
+  excluir,
+  verificar
 };

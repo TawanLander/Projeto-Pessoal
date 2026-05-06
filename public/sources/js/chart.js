@@ -142,21 +142,23 @@ function plotarDadosMedia(array){
     });
 }
 
-fetch('/usuarios/informacoes', { // ? FETCH PARA FAZER TUDO FUNCIONAR, MANDA UM TOKEN (PORQUE ESSE DADOS SÓ PODEM SER VISTOS POR UM ADMINISTRADOR DO SISTEMA)
-    headers: {
-        'token': sessionStorage.getItem('token')
-    }
-}).then(async response => {
-    if(response.ok){ // ? A RESPOSTA RETORNA UM ARRAY COM OS RESULTADOS E SÓ DIVIDIMOS ELE PARA CADA GRÁFICO
-        const resultado = await response.json();
-
-        plotarDadosGeneros(resultado[0]);
-        plotarDadosIdade(resultado[1]);
-        plotarDadosMedia(resultado[2]);
-
-    } else {
-        response.text().then(msg => {
-            console.error(msg)
-        })
-    }
-});
+function exibirDados(){
+    fetch('/usuarios/informacoes', { // ? FETCH PARA FAZER TUDO FUNCIONAR, MANDA UM TOKEN (PORQUE ESSE DADOS SÓ PODEM SER VISTOS POR UM ADMINISTRADOR DO SISTEMA)
+        headers: {
+            'token': sessionStorage.getItem('token')
+        }
+    }).then(async response => {
+        if(response.ok){ // ? A RESPOSTA RETORNA UM ARRAY COM OS RESULTADOS E SÓ DIVIDIMOS ELE PARA CADA GRÁFICO
+            const resultado = await response.json();
+    
+            plotarDadosGeneros(resultado[0]);
+            plotarDadosIdade(resultado[1]);
+            plotarDadosMedia(resultado[2]);
+    
+        } else {
+            response.text().then(msg => {
+                console.error(msg)
+            })
+        }
+    });
+}

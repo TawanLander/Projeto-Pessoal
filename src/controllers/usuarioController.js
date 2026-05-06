@@ -65,9 +65,40 @@ function informacoes(req, res) {
     });
 }
 
+function excluir(req, res, idUsuario){
+    if(idUsuario === undefined){
+        return res.status(400).send('Id undefined, impossível de continuar!')
+    }
+    
+    usuarioModel.excluir(idUsuario).then(resultado => {
+        return res.status(200).json(resultado);
+    }).catch(e => {
+        console.log(e.sqlMessage);
+        return res.status(400).send(`Erro ao deletar! ${e.sqlMessage}`);
+    });
+
+}
+
+function verificar(req, res, token){
+    usuarioModel.verificar(token).then(r => {
+        let resposta = r.json();
+        if(resposta.situacao === 'expirado'){ // ? USUÁRIO CAIU NA MALHA FINA E SERÁ EXCLUÍDO
+
+            
+
+            return res.status(200).send(false);
+        }
+
+        return res.status(200).send(true); // ? USUÁRIO FOI VERIFICADO COM SUCESSO
+    }).catch(e => {
+        return res.status(400).send(`Erro ao verificar usuário! ${e.sqlMessage}`)
+    })
+}
 
 module.exports = {
     autenticar,
     cadastrar,
     informacoes,
+    excluir,
+    verificar
 }

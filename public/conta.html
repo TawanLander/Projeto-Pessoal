@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="icon" href="" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./sources/js/script.js"></script>
     <script src="./sources/js/main.js" defer></script>
     <script src="./sources/js/chart.js" defer></script>
     <script src="./sources/js/conta.js" defer></script>
@@ -18,10 +17,10 @@
     <script src="./sources/js/sessao.js" defer></script>
 
 </head>
-<body onload="verificarSessao('redirecionar'), carregarElementos('conta'), plotarDadosUsuario()">
+<body onload="verificarSessao('redirecionar'), carregarElementos('conta'), plotarDadosUsuario(), plotarGraficos()">
     <header></header>
     <main>
-        <div class="container">
+        <div class="container" id="main">
             <div class="parte">
                 <div class="info">
                 <h1>Informações</h1>
@@ -37,23 +36,6 @@
                 <button class="btn-conta" onclick="mudarValores()">Mudar Valores</button>
                 <button class="btn-conta" onclick="deslogarUsuario()">Deslogar</button>
                 <button class="btn-conta" onclick="excluirConta()">Excluir Conta!</button>
-            </div>
-            <div class="parte">
-                <div class="info">
-                    <h1 style="text-align: center;">Métricas</h1>
-                    <div class="dashs">
-                        <canvas id="chart-generos"></canvas>
-                    </div>
-                    <div class="dashs">
-                        <canvas id="chart-idade"></canvas>
-                    </div>
-                    <div class="dashs">
-                        <canvas id="chart-mediaQuizes"></canvas>
-                    </div>
-                    <!--<div class="dashs">
-                        <canvas id="chart-perguntasPorQuiz"></canvas>
-                    </div>-->
-                </div>
             </div>
         </div>
     </main>

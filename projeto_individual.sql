@@ -27,7 +27,8 @@ cargo char(1) not null
 select * from quizes_completos;
 select * from acertos;
 
-insert into usuario values (default, 'Tawan Lander', 'tlander2007@gmail.com', 'Masculino', '2007-04-02', 'SenhaFortona12#', 'a');
+insert into usuario values(default, 'GeeQuiz', 'tlander2007@gmail.com', 'Masculino', '2007-04-02', 'Admin123#', 'a');
+insert into usuario values (default, 'Tawan Lander', 'tlander2007@gmail.com', 'Masculino', '2007-04-02', 'SenhaFortona12#', 'p');
 insert into usuario values (default, 'Tawan Lander', 'sim@sim.com', 'Feminino', '2007-04-02', 'SenhaFortona15#', 0, 'a');
 insert into usuario values (default, 'Tawan Lander', 'teste@teste.com', 'Prefiro Não Dizer', '2007-04-02', 'SenhaFortona14#', 0, 'a');
 insert into usuario values (default, 'Tawan Lander', 'email@email.com', 'Outro', '2007-04-02', 'SenhaFortona13#', 0, 'a');
@@ -42,7 +43,7 @@ tipo varchar(20) not null,
 imagem varchar(500),
 gostados int,
 fkUsuario int,
-constraint fkUsuario_quiz foreign key (fkUsuario) references usuario(idUsuario)
+constraint fkUsuario_quiz foreign key (fkUsuario) references usuario(idUsuario) on delete cascade
 );
 
 alter table quiz modify column gostados int;
@@ -54,8 +55,8 @@ dthr datetime default now(),
 fkUsuario int,
 fkQuiz int,
 constraint pkTripla_quizes_completos primary key (id, fkUsuario, fkQuiz),
-constraint fkUsuario_quizes_completos foreign key (fkUsuario) references usuario(idUsuario),
-constraint fkQuiz_quizes_completos foreign key (fkQuiz) references quiz(idQuiz)
+constraint fkUsuario_quizes_completos foreign key (fkUsuario) references usuario(idUsuario) on delete cascade,
+constraint fkQuiz_quizes_completos foreign key (fkQuiz) references quiz(idQuiz) on delete cascade
 );
 
 create table acertos(
@@ -104,11 +105,15 @@ insert into opcoes (id, fkPerguntas, fkQuiz, nome) values
 (3, 1, 3, 'ABC'),
 (2, 2, 3, 'DEC');
 
+select * from usuario;
 select * from opcoes;
 select * from quiz;
 
-insert into quiz (titulo, tipo, genero, imagem) values 
-('Você ama mais HunterXHunter do que a Iasmin?', 'Conhecimento Geral', 'Anime', 'https://imgs.search.brave.com/NKktO8yCXQMplrZ8vJUWMPTJHw0M2-gzLVZW1vUDEl4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMwLmNicmltYWdl/cy5jb20vd29yZHBy/ZXNzL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDIzLzEwL2dvbi1r/aWxsdWEtbGVvcmlv/LWFuZC1rdXJhcGlr/YS1vbi1odW50ZXIt/ZXhhbS1hcmMuanBn/P3E9NDkmZml0PWNy/b3Amdz0zNjAmaD0y/NDAmZHByPTI');
+alter table quiz auto_increment = 0;
+insert into quiz (fkUsuario, titulo, tipo, genero, imagem) values 
+(4, 'Você ama mais HunterXHunter do que a Iasmin?', 'Conhecimento Geral', 'Anime', 'https://imgs.search.brave.com/NKktO8yCXQMplrZ8vJUWMPTJHw0M2-gzLVZW1vUDEl4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMwLmNicmltYWdl/cy5jb20vd29yZHBy/ZXNzL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDIzLzEwL2dvbi1r/aWxsdWEtbGVvcmlv/LWFuZC1rdXJhcGlr/YS1vbi1odW50ZXIt/ZXhhbS1hcmMuanBn/P3E9NDkmZml0PWNy/b3Amdz0zNjAmaD0y/NDAmZHByPTI');
+
+update quiz set idQuiz = 1 where idQuiz = 3;
 
 insert into perguntas (id, fkQuiz, titulo, imagem, tipo) values 
 (1, 1, 'Qual o tipo de NEN do Killua e Gon?', 'https://imgs.search.brave.com/kVThxUfQPLxf2i3cXH97v_8P4g0HjapOeJvJpR8Y3dQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMuYmVlYm9tLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAy/My8wNi9UZW4uanBn/P3c9NjQw', 'n'),
@@ -198,3 +203,14 @@ INSERT INTO opcoes (id, fkPerguntas, fkQuiz, titulo, tipo) VALUES
 (2, 3, 4, 'High Transfer Text Protocol', 0),
 (3, 3, 4, 'Hyper Terminal Transfer Process', 0),
 (4, 3, 4, 'Home Tool Text Processor', 0);
+
+create table token(
+idToken int auto_increment,
+fkUsuario int,
+primary key(idToken, fkUsuario),
+constraint fkUsuario_token foreign key (fkUsuario) references usuario(idUsuario) on delete cascade,
+token varchar(150),
+dthr datetime default now()
+);
+
+describe usuario;
